@@ -3,9 +3,16 @@
  */
 package ilc.cnr.it.clavius;
 
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.StringWriter;
+import java.io.Writer;
+import java.nio.charset.Charset;
 import java.util.Map;
+
+import org.apache.commons.io.*;
 
 /**
  * @author angelodel80
@@ -74,8 +81,53 @@ public class HunposTagger {
 		verticalMsg = vertMsgBuilder.toString();
 		System.out.format("%s",verticalMsg);
 		
-		String verticalTagged = verticalMsg;
+		
+		
+		String verticalTagged = runCommand("");
 		return verticalTagged;
+	}
+	
+	private String runCommand(String argument){
+		String ret = "";
+		Runtime rt = java.lang.Runtime.getRuntime();
+		Process p;
+		
+		try {
+			 p = rt.exec("ls /Users");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			p = null;
+		}
+		
+		BufferedInputStream binp = new BufferedInputStream(p.getInputStream());
+		StringWriter writer = new StringWriter();
+		
+		
+		try {
+			IOUtils.copy(binp, writer, Charsets.UTF_8);
+		} catch (IOException ex) {
+			// TODO Auto-generated catch block
+			ex.printStackTrace();
+		}
+		
+		
+		return writer.toString();
+	}
+	
+	private String runProcess(String in){
+		String ret = "";
+		ProcessBuilder procBuild = new ProcessBuilder("ls", "-al","$HOME");
+		
+		Map<String, String> env = procBuild.environment();
+		StringBuilder outStr = new StringBuilder();
+		for (String envName : env.keySet()) {
+			outStr.append(String.format("%s=%s%n",
+                    envName,
+                    env.get(envName)));
+        }
+		
+		return ret;
 	}
 	
 	public void printPath(){
