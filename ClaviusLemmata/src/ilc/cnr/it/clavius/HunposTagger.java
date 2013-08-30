@@ -100,25 +100,14 @@ public class HunposTagger {
 			p = null;
 		}
 		
-		BufferedInputStream binp = new BufferedInputStream(p.getInputStream());
-		StringWriter writer = new StringWriter();
-		
-		
-		try {
-			IOUtils.copy(binp, writer, Charsets.UTF_8);
-		} catch (IOException ex) {
-			// TODO Auto-generated catch block
-			ex.printStackTrace();
-		}
-		
-		
-		 ret = writer.toString();
+		// chiamare funzione per copia stringa
 		 return ret;
 	}
 	
 	private String runProcess(String in){
 		String ret = "";
 		ProcessBuilder procBuild = new ProcessBuilder("ls", "-al","$HOME");
+		final Process proc;
 		
 		Map<String, String> env = procBuild.environment();
 		StringBuilder outStr = new StringBuilder();
@@ -129,6 +118,20 @@ public class HunposTagger {
         }
 		outStr.append("********");
 		ret = outStr.toString();
+		
+		try {
+			 proc = procBuild.start();
+			 proc.waitFor();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InterruptedException ie) {
+			// TODO Auto-generated catch block
+			ie.printStackTrace();
+		}
+		
+		
+		
 		return ret;
 	}
 	
