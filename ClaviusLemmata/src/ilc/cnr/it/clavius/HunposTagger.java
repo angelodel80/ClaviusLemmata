@@ -83,7 +83,7 @@ public class HunposTagger {
 		
 		
 		
-		String verticalTagged = runCommand("");
+		String verticalTagged =  runProcess(""); //runCommand("");
 		return verticalTagged;
 	}
 	
@@ -112,7 +112,8 @@ public class HunposTagger {
 		}
 		
 		
-		return writer.toString();
+		 ret = writer.toString();
+		 return ret;
 	}
 	
 	private String runProcess(String in){
@@ -126,7 +127,8 @@ public class HunposTagger {
                     envName,
                     env.get(envName)));
         }
-		
+		outStr.append("********");
+		ret = outStr.toString();
 		return ret;
 	}
 	
