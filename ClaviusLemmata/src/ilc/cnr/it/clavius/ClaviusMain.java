@@ -57,7 +57,7 @@ public class ClaviusMain {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		ClaviusMain main1 = new ClaviusMain();
-		ClaviusMain main2 = new ClaviusMain("this is the second class");
+		ClaviusMain main2 = new ClaviusMain("This is the second class");
 		
 		main1.printMsg();
 		main2.printMsg();

@@ -7,6 +7,8 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.nio.charset.Charset;
@@ -19,13 +21,13 @@ import org.apache.commons.io.*;
  *
  */
 public class HunposTagger {
-	
+
 	private String pathToModel = "";
 	private String pathToBin = System.getenv("HOME")+System.getProperty("file.separator")+"Risorse"+System.getProperty("file.separator")+"tools"+System.getProperty("file.separator")+"hunpos-1.0-macosx"+System.getProperty("file.separator")+"hunpos-tag";
 
 	private File modelFile;
 	private File hunposFile;
-	
+
 	/**
 	 * 
 	 */
@@ -33,7 +35,7 @@ public class HunposTagger {
 		// TODO Auto-generated constructor stub
 		init(pathToModel,pathToBin);
 	}
-	
+
 	/**
 	 * 
 	 */
@@ -41,7 +43,7 @@ public class HunposTagger {
 		// TODO Auto-generated constructor stub
 		//init(this.pathToModel, this.pathToBin);
 	}
-	
+
 	private void init(String pathToModel, String pathToBin) {
 		// TODO Auto-generated method stub
 		this.pathToModel = System.getenv("HOME")+System.getProperty("file.separator")+"Risorse"+System.getProperty("file.separator")+"tools"+System.getProperty("file.separator")+pathToModel;
@@ -49,7 +51,7 @@ public class HunposTagger {
 			System.err.println("*****");
 			this.pathToBin = pathToBin;
 		}
-		
+
 		try{
 			modelFile = new File(this.pathToModel);
 			hunposFile = new File(this.pathToBin);
@@ -59,16 +61,16 @@ public class HunposTagger {
 			if (!hunposFile.exists()){
 				throw new FileNotFoundException("HunposFile");
 			}
-			
+
 			System.err.println("the files are installed inside the environment");
 		}catch(FileNotFoundException e){
 			e.printStackTrace();
 			System.err.println("file non trovato: "+e.getMessage());
 		}finally{}
-		
-		
+
+
 	}
-	
+
 	public String tag(String msg){
 		String verticalMsg;
 		StringBuilder vertMsgBuilder = new StringBuilder();
@@ -79,68 +81,77 @@ public class HunposTagger {
 		}
 		vertMsgBuilder.append("\n");
 		verticalMsg = vertMsgBuilder.toString();
-		System.out.format("%s",verticalMsg);
-		
-		
-		
-		String verticalTagged =  runProcess(""); //runCommand("");
+
+		String verticalTagged =  runProcess(verticalMsg); //runCommand(""); 
 		return verticalTagged;
 	}
-	
+
 	private String runCommand(String argument){
 		String ret = "";
 		Runtime rt = java.lang.Runtime.getRuntime();
 		Process p;
-		
+
 		try {
-			 p = rt.exec("ls /Users");
+			p = rt.exec("ls /Users");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			p = null;
 		}
-		
+
 		// chiamare funzione per copia stringa
-		 return ret;
+		ret = ClaviusUtils.StreamToString(p.getInputStream());
+		return ret;
 	}
-	
-	private String runProcess(String in){
+
+	private String runProcess(String inMsg){
 		String ret = "";
-		ProcessBuilder procBuild = new ProcessBuilder("ls", "-al","$HOME");
+		ProcessBuilder procBuild = new ProcessBuilder(pathToBin, pathToModel);
 		final Process proc;
-		
-		Map<String, String> env = procBuild.environment();
-		StringBuilder outStr = new StringBuilder();
-		for (String envName : env.keySet()) {
-			outStr.append(String.format("%s=%s%n",
-                    envName,
-                    env.get(envName)));
-        }
-		outStr.append("********");
-		ret = outStr.toString();
-		
+
+//		Map<String, String> env = procBuild.environment();
+//		StringBuilder outStr = new StringBuilder();
+//		for (String envName : env.keySet()) {
+//			outStr.append(String.format("%s=%s%n",
+//					envName,
+//					env.get(envName)));
+//		}
+//		outStr.append("********");
+		//ret = outStr.toString();
+		System.out.format("%s",inMsg);
+
 		try {
-			 proc = procBuild.start();
-			 proc.waitFor();
+			
+			proc = procBuild.start();
+			OutputStream os = proc.getOutputStream();
+			
+			os.write("This".getBytes());
+			os.write("\n\n".getBytes());
+			os.flush();
+			os.close();
+			proc.waitFor();
+			InputStream is = proc.getInputStream();
+			ret = ret + "\n" + ClaviusUtils.StreamToString(is);
+			is.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (InterruptedException ie) {
 			// TODO Auto-generated catch block
 			ie.printStackTrace();
+		}finally{
+			
 		}
-		
-		
-		
+
 		return ret;
 	}
-	
+
 	public void printPath(){
 		System.err.println("the path model is: " + this.pathToModel);
 		System.err.println("the path bin is: " + this.pathToBin);
 		//System.err.println(System.getenv("HOME"));
 	}
-	
-	
+
+
 
 }

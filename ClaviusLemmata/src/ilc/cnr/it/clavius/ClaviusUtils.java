@@ -39,6 +39,13 @@ public class ClaviusUtils {
 
 
 			ret = writer.toString();
+			try {
+				binp.close();
+				writer.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		return ret;
 
