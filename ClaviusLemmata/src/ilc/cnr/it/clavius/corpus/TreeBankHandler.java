@@ -99,6 +99,7 @@ public class TreeBankHandler {
 		
 		try {
 			printFileXML();
+			printFileTabular();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
