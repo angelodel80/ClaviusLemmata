@@ -5,6 +5,7 @@ package ilc.cnr.it.clavius;
 
 import ilc.cnr.it.clavius.corpus.TreeBankHandler;
 
+import java.io.IOException;
 import java.util.Map;
 
 /**
@@ -45,7 +46,14 @@ public class ClaviusMain {
 
 	public void manageCorpus(){
 		TreeBankHandler tbh = new TreeBankHandler("ldt-1.5.xml");
-		tbh.printFile();
+//		try {
+//			tbh.printFile();
+//			
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		tbh.transformToTrain();
 	}
 	
 	public void printEnv (){
