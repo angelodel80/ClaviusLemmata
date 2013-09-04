@@ -105,7 +105,7 @@ public class HunposTagger {
 	}
 
 	private String runProcess(String inMsg){
-		String ret = "";
+		String ret = "\n********\n";
 		ProcessBuilder procBuild = new ProcessBuilder(pathToBin, pathToModel);
 		final Process proc;
 
@@ -125,8 +125,8 @@ public class HunposTagger {
 			proc = procBuild.start();
 			OutputStream os = proc.getOutputStream();
 			
-			os.write("This".getBytes());
-			os.write("\n\n".getBytes());
+			os.write(inMsg.getBytes());
+//			os.write("\n\n".getBytes());
 			os.flush();
 			os.close();
 			proc.waitFor();

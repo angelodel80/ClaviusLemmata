@@ -4,6 +4,7 @@
 package ilc.cnr.it.clavius;
 
 import java.io.BufferedInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
@@ -24,6 +25,25 @@ public class ClaviusUtils {
 		// TODO Auto-generated constructor stub
 	}
 
+public static void verifyFile( File aFile, boolean w ) {
+		
+		if (aFile == null) {
+	      throw new IllegalArgumentException("File should not be null.");
+	    }
+		
+	    if (!aFile.exists()) {
+	      throw new IllegalArgumentException ("File does not exist: " + aFile);
+	    }
+	    if (!aFile.isFile()) {
+	      throw new IllegalArgumentException("Should not be a directory: " + aFile);
+	    }
+	    if (w && !aFile.canWrite()) {
+	      throw new IllegalArgumentException("File cannot be written: " + aFile);
+	    }
+	    
+	    System.out.println("verifying file: " + aFile.getAbsolutePath() + "\n");
+	  }
+	
 	public static String StreamToString(InputStream is){
 		String ret = "";
 		if(null != is) {

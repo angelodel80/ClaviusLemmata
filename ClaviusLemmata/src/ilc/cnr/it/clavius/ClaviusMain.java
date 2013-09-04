@@ -3,6 +3,8 @@
  */
 package ilc.cnr.it.clavius;
 
+import ilc.cnr.it.clavius.corpus.TreeBankHandler;
+
 import java.util.Map;
 
 /**
@@ -41,6 +43,11 @@ public class ClaviusMain {
 		//hunPos.printPath();
 	}
 
+	public void manageCorpus(){
+		TreeBankHandler tbh = new TreeBankHandler("ldt-1.5.xml");
+		tbh.printFile();
+	}
+	
 	public void printEnv (){
         Map<String, String> env = System.getenv();
         for (String envName : env.keySet()) {
@@ -57,11 +64,12 @@ public class ClaviusMain {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		ClaviusMain main1 = new ClaviusMain();
-		ClaviusMain main2 = new ClaviusMain("This is the second class");
+		ClaviusMain main2 = new ClaviusMain("This fox jumps the dog");
 		
-		main1.printMsg();
+		//main1.printMsg();
 		main2.printMsg();
+		main2.manageCorpus();
+		//main2.process("en_wsj.model","");
 		
-		main2.process("en_wsj.model","");
 	}	
 }
