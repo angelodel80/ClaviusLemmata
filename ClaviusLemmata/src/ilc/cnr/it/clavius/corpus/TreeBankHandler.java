@@ -126,7 +126,7 @@ public class TreeBankHandler {
 			for (Element sentence : root.getChildren("sentence")) {
 				
 				for (Element word : sentence.getChildren("word")) {
-					sout.append(String.format("%s\t%s\n", word.getAttributeValue("form"),word.getAttributeValue("postag")));
+					sout.append(String.format("%s\t%s\t\n", word.getAttributeValue("form"),word.getAttributeValue("postag")));
 				}
 				
 				sout.append("\n");

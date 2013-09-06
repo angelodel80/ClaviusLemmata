@@ -72,12 +72,12 @@ public class ClaviusMain {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		ClaviusMain main1 = new ClaviusMain();
-		ClaviusMain main2 = new ClaviusMain("This fox jumps the dog");
+		ClaviusMain main2 = new ClaviusMain("In nova fert animus mutatas dicere formas corpora");
 		
 		//main1.printMsg();
 		main2.printMsg();
 		main2.manageCorpus();
 		//main2.process("en_wsj.model","");
-		
+		main2.process("testFirst.model","");
 	}	
 }

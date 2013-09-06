@@ -1,0 +1,8 @@
+53144 tokens
+3474 sentences
+438 different tag
+
+Guesser trained with
+22119 lowercase 
+2494 uppercase tokens
+theta = 0.0345894825041
