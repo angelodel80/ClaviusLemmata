@@ -76,7 +76,7 @@ public class ClaviusMain {
 		
 		//main1.printMsg();
 		main2.printMsg();
-		main2.manageCorpus();
+		//main2.manageCorpus();
 		//main2.process("en_wsj.model","");
 		main2.process("testFirst.model","");
 	}	
