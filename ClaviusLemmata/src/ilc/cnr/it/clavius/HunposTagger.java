@@ -100,7 +100,7 @@ public class HunposTagger {
 		}
 
 		// chiamare funzione per copia stringa
-		ret = ClaviusUtils.StreamToString(p.getInputStream());
+		ret = ClaviusUtils.streamToString(p.getInputStream());
 		return ret;
 	}
 
@@ -131,7 +131,7 @@ public class HunposTagger {
 			os.close();
 			proc.waitFor();
 			InputStream is = proc.getInputStream();
-			ret = ret + "\n" + ClaviusUtils.StreamToString(is);
+			ret = ret + "\n" + ClaviusUtils.streamToString(is);
 			is.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

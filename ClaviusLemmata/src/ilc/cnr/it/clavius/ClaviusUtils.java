@@ -44,7 +44,7 @@ public static void verifyFile( File aFile, boolean w ) {
 	    System.out.println("verifying file: " + aFile.getAbsolutePath() + "\n");
 	  }
 	
-	public static String StreamToString(InputStream is){
+	public static String streamToString(InputStream is){
 		String ret = "";
 		if(null != is) {
 			BufferedInputStream binp = new BufferedInputStream(is);
@@ -70,5 +70,7 @@ public static void verifyFile( File aFile, boolean w ) {
 		return ret;
 
 	}
+	
+	//public static Document 
 
 }
