@@ -74,6 +74,7 @@ public class HunposTagger {
 	public String tag(String msg){
 		String verticalMsg;
 		StringBuilder vertMsgBuilder = new StringBuilder();
+		msg = msg.replaceAll("([\\.,;!?<>:]+)", " $1");
 		String tokens[] = msg.split(" ");
 		for (String token : tokens) {
 			vertMsgBuilder.append(token);
@@ -105,7 +106,7 @@ public class HunposTagger {
 	}
 
 	private String runProcess(String inMsg){
-		String ret = "\n********\n";
+		String ret = "";//"\n********\n";
 		ProcessBuilder procBuild = new ProcessBuilder(pathToBin, pathToModel);
 		final Process proc;
 
@@ -118,7 +119,7 @@ public class HunposTagger {
 //		}
 //		outStr.append("********");
 		//ret = outStr.toString();
-		System.out.format("%s",inMsg);
+		//System.out.format("%s",inMsg);
 
 		try {
 			
