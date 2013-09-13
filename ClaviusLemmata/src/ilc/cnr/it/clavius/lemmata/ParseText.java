@@ -2,7 +2,7 @@
 /**
  * 
  */
-package ilc.cnr.it.calavius.lemmata;
+package ilc.cnr.it.clavius.lemmata;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
