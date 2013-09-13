@@ -140,8 +140,12 @@ public class ClaviusMain {
 			main2.process("testFirst.model","");
 		}
 		main2.writeOut("/Users/angelodel80/Risorse/sources/clavius/TaggedFile.txt");
-//		main1.setMsg("Si huius generis est, iam constat esse mechanicum, et a nostro instituto alienum. Sin illius, cur non demonstratur.");
+//		main1.setMsg("fidelis dulcem amat virgo poetam");
 //		main1.setSentName("phrase_1");
+//		main1.process("testFirst.model", "");
+//		//System.out.println(main1.outBuilder.toString());
+//		main1.setMsg("virgo fidelis dulcem poetam amat");
+//		main1.setSentName("phrase_2");
 //		main1.process("testFirst.model", "");
 //		System.out.println(main1.outBuilder.toString());
 	}

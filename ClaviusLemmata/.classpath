@@ -5,5 +5,7 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Commons (Apache)"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Jdom2"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Lucene"/>
+	<classpathentry kind="lib" path="/Users/angelodel80/Src/Java/librerie/ParseUtils.jar" sourcepath="/Users/angelodel80/Src/Java/librerie/ParseUtils.jar"/>
+	<classpathentry kind="lib" path="/Users/angelodel80/Src/Java/librerie/mysql-connector-java-5.1.26/mysql-connector-java-5.1.26-bin.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
