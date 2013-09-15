@@ -6,11 +6,15 @@ package ilc.cnr.it.clavius;
 import ilc.cnr.it.clavius.corpus.TextHandler;
 import ilc.cnr.it.clavius.corpus.TreeBankHandler;
 import ilc.cnr.it.clavius.lemmata.ParseToken;
+import ilc.cnr.it.clavius.utils.ClaviusUtils;
 import ilc.cnr.it.clavius.utils.TextUtils;
 
 import java.io.IOException;
 import java.io.ObjectInputStream.GetField;
 import java.util.Map;
+
+import org.jdom2.Document;
+import org.jdom2.JDOMException;
 
 /**
  * @author angelodel80
@@ -66,8 +70,8 @@ public class ClaviusMain {
 		}
 	}
 	
-	public void manageCorpus(){
-		TreeBankHandler tbh = new TreeBankHandler("ldt-1.5.xml");
+	public void manageCorpus(String treeBankName){
+		TreeBankHandler tbh = new TreeBankHandler(treeBankName);
 		//		try {
 		//			tbh.printFile();
 		//			
@@ -122,13 +126,12 @@ public class ClaviusMain {
 	}
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		ClaviusMain main1 = new ClaviusMain();
+
+		//ClaviusMain main1 = new ClaviusMain();
+		
 		ClaviusMain main2 = new ClaviusMain();
 
-		//main1.printMsg();
-		//main2.printMsg();
-		//main2.manageCorpus();
+		//main2.manageCorpus("ldt-1.5.xml");
 		//main2.process("en_wsj.model","");
 		TextHandler th = new TextHandler();
 		Map<String, String> sentences = th.getSentences("/Users/angelodel80/Risorse/sources/clavius/147APUG530cc_129130_xml.xml");
@@ -140,9 +143,20 @@ public class ClaviusMain {
 			System.out.println("sentence:" + main2.getSentName() +" " + main2.getMsg());
 			main2.process("testFirst.model","");
 		}
-		main2.writeOut("/Users/angelodel80/Risorse/sources/clavius/TaggedFile.txt");
-		ParseToken.init("/Users/angelodel80/Risorse/sources/clavius/TaggedFile.txt", "/Users/angelodel80/Risorse/sources/clavius/TaggedLemmataFile.txt");
-		ParseToken.run();
+		//main2.writeOut("/Users/angelodel80/Risorse/sources/clavius/TaggedFile.txt");
+		//ParseToken.init("/Users/angelodel80/Risorse/sources/clavius/TaggedFile.txt", "/Users/angelodel80/Risorse/sources/clavius/TaggedLemmataFile.txt");
+		//ParseToken.run();
+		try {
+			Document xmlSentences = TextUtils.TabToXml("/Users/angelodel80/Risorse/sources/clavius/out-tokensLemmatized-11092013.txt", true);
+			ClaviusUtils.makeSentenceXML(xmlSentences);
+		} catch (JDOMException e) {
+			// TODO Auto-generated catch block
+			e.getMessage();
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 //		main1.setMsg("fidelis dulcem amat virgo poetam");
 //		main1.setSentName("phrase_1");
 //		main1.process("testFirst.model", "");

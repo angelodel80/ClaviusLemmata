@@ -43,7 +43,7 @@ public class ParseText {
 		return ret;
 	}
 	
-	protected static BufferedReader getReader(File inFile) throws UnsupportedEncodingException, FileNotFoundException{
+	public static BufferedReader getReader(File inFile) throws UnsupportedEncodingException, FileNotFoundException{
 		return new BufferedReader(new InputStreamReader( new FileInputStream(inFile), "utf-8"));
 	}
 	
