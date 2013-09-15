@@ -28,7 +28,7 @@ public class ParseText {
 	/**
 	 * @param args
 	 */
-	static boolean init(String fileIn, String fileOut){
+	public static boolean init(String fileIn, String fileOut){
 		boolean ret = false;
 		myFile = new File(fileIn);
 		outFile = new File(fileOut);

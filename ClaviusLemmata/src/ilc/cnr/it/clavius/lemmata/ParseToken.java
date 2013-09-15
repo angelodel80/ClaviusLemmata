@@ -70,56 +70,7 @@ public class ParseToken extends ParseText {
 		return ret;
 	}
 
-	private static boolean elabora_1(String line){
-		boolean ret = false;
-		Connection connection = null;
-		Statement stm = null;
-		ResultSet rs = null;
-
-		//String query = "select * from hib_lemmas where lemma_text =\"";
-		String query = "select count(morph_code) as morph_count, lemma_id from hib_parses where bare_form =\"";
-		if(null!= line){
-			String token = line.substring(line.indexOf("@")+1, line.indexOf("[")).replaceAll("[,;.?]", ""); 
-			System.out.println("TOKEN: "+ token);
-			//outString.append("TOKEN: "+ token +"\n");
-
-			if(!("".equals(token))){
-				query = query+token+"\"";
-				// FIXME group by
-				query = query+" group by lemma_id";
-				connection = connectDatabase();
-				try {
-					stm = connection.createStatement();
-					rs = stm.executeQuery(query);
-
-					while (rs.next()){
-						//String def = rs.getString("lemma_short_def");
-						String morpho_code = rs.getString("morph_count");
-						String lemma_id = rs.getString("lemma_id");
-						System.out.println("[["+morpho_code+"]]" + "[[" + lemma_id+"]]");
-						outString.append("[["+morpho_code+"]]"+"[[" + lemma_id+"]]" + "\n");
-					}
-
-
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} finally{
-					try {
-						stm.close();
-						connection.close();
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-
-				}
-				ret = true;
-			}
-		}
-
-		return ret;
-	}
+	
 
 	public static boolean elabora(String line){
 		System.err.println("in elabora()");
@@ -157,12 +108,7 @@ public class ParseToken extends ParseText {
 					String lemma="";
 					//
 					while (rs.next()){
-						//						//String def = rs.getString("lemma_short_def");
-						//						String morpho_code = rs.getString("morph_count");
-						//						String lemma_id = rs.getString("lemma_id");
-						//						System.out.println("[["+morpho_code+"]]" + "[[" + lemma_id+"]]");
-						//						outString.append("[["+morpho_code+"]]"+"[[" + lemma_id+"]]" + "\n");
-
+				
 						lemma = rs.getString("lemma_text");
 						morphos.append(" ("+rs.getString("morph_code")+") ");
 
@@ -195,7 +141,7 @@ public class ParseToken extends ParseText {
 		Connection con = null;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/perseus", "angelodel80", "190280");
+			con = DriverManager.getConnection("jdbc:mysql://192.168.92.229:3306/perseus", "angelodel80", "190280");
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

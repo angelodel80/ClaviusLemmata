@@ -3,8 +3,6 @@
  */
 package ilc.cnr.it.clavius.utils;
 
-import ilc.cnr.it.clavius.ClaviusUtils;
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -61,6 +59,12 @@ public class TextUtils {
 			}
 			
 		}
+	}
+	
+	public static Document TabToXml(String tabFile){
+		Document doc = null;
+		
+		return doc;
 	}
 
 }

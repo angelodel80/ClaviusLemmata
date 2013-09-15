@@ -3,6 +3,8 @@
  */
 package ilc.cnr.it.clavius;
 
+import ilc.cnr.it.clavius.utils.ClaviusUtils;
+
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;

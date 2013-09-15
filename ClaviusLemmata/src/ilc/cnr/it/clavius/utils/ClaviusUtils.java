@@ -1,7 +1,7 @@
 /**
  * 
  */
-package ilc.cnr.it.clavius;
+package ilc.cnr.it.clavius.utils;
 
 import java.io.BufferedInputStream;
 import java.io.File;

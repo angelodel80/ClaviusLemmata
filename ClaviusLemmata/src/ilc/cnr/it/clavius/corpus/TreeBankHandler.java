@@ -3,7 +3,7 @@
  */
 package ilc.cnr.it.clavius.corpus;
 
-import ilc.cnr.it.clavius.ClaviusUtils;
+import ilc.cnr.it.clavius.utils.ClaviusUtils;
 
 import java.io.BufferedWriter;
 import java.io.File;

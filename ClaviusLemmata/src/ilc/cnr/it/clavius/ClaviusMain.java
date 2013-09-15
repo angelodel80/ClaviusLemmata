@@ -5,6 +5,7 @@ package ilc.cnr.it.clavius;
 
 import ilc.cnr.it.clavius.corpus.TextHandler;
 import ilc.cnr.it.clavius.corpus.TreeBankHandler;
+import ilc.cnr.it.clavius.lemmata.ParseToken;
 import ilc.cnr.it.clavius.utils.TextUtils;
 
 import java.io.IOException;
@@ -140,6 +141,8 @@ public class ClaviusMain {
 			main2.process("testFirst.model","");
 		}
 		main2.writeOut("/Users/angelodel80/Risorse/sources/clavius/TaggedFile.txt");
+		ParseToken.init("/Users/angelodel80/Risorse/sources/clavius/TaggedFile.txt", "/Users/angelodel80/Risorse/sources/clavius/TaggedLemmataFile.txt");
+		ParseToken.run();
 //		main1.setMsg("fidelis dulcem amat virgo poetam");
 //		main1.setSentName("phrase_1");
 //		main1.process("testFirst.model", "");
