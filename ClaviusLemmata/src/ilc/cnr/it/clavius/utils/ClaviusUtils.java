@@ -108,7 +108,7 @@ public class ClaviusUtils {
 					//FIXME attenzione gestire ultimo elemento
 				}
 			}
-			//docs.add(doc);
+			docs.add(doc);
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -188,7 +188,7 @@ public class ClaviusUtils {
 		for (Element doc : docs) {
 			Element tmp_doc = doc.clone();
 			System.out.println(doc.getChildText("field"));
-			try {//new Document().setRootElement(new Element("add").addContent(doc.detach()))
+			try {
 			xo.output(new Document().setRootElement(new Element("add").setContent(tmp_doc)), 
 					new FileWriter("/Users/angelodel80/Risorse/sources/clavius/"+"Letter147_an-"+doc.getChildText("field")+".xml"));
 		} catch (IOException e) {

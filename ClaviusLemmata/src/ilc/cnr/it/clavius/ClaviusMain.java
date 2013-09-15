@@ -3,6 +3,7 @@
  */
 package ilc.cnr.it.clavius;
 
+import ilc.cnr.it.clavius.constants.HandleContants;
 import ilc.cnr.it.clavius.corpus.TextHandler;
 import ilc.cnr.it.clavius.corpus.TreeBankHandler;
 import ilc.cnr.it.clavius.lemmata.ParseToken;
@@ -132,22 +133,22 @@ public class ClaviusMain {
 		ClaviusMain main2 = new ClaviusMain();
 
 		//main2.manageCorpus("ldt-1.5.xml");
-		//main2.process("en_wsj.model","");
+		
 		TextHandler th = new TextHandler();
-		Map<String, String> sentences = th.getSentences("/Users/angelodel80/Risorse/sources/clavius/147APUG530cc_129130_xml.xml");
+		Map<String, String> sentences = th.getSentences(HandleContants.getXmtTeiFile());
 		Object[] sents = sentences.values().toArray();
 		Object[] sKeys =  sentences.keySet().toArray();
 		for(int i = 0; i< sents.length; i++){
 			main2.setMsg((String)sents[i]);
 			main2.setSentName(String.format("%s:%s", (String)sKeys[i], main2.getMsg()));
 			System.out.println("sentence:" + main2.getSentName() +" " + main2.getMsg());
-			main2.process("testFirst.model","");
+			main2.process(HandleContants.getModelforHunPos(),"");
 		}
-		//main2.writeOut("/Users/angelodel80/Risorse/sources/clavius/TaggedFile.txt");
-		//ParseToken.init("/Users/angelodel80/Risorse/sources/clavius/TaggedFile.txt", "/Users/angelodel80/Risorse/sources/clavius/TaggedLemmataFile.txt");
+		//main2.writeOut(HandleContants.getTaggedFile());
+		//ParseToken.init(HandleContants.getTaggedFile(), HandleContants.getTaggedFile());
 		//ParseToken.run();
 		try {
-			Document xmlSentences = TextUtils.TabToXml("/Users/angelodel80/Risorse/sources/clavius/out-tokensLemmatized-11092013.txt", true);
+			Document xmlSentences = TextUtils.TabToXml(HandleContants.getTabFileAnalized(), true);
 			ClaviusUtils.makeSentenceXML(xmlSentences);
 		} catch (JDOMException e) {
 			// TODO Auto-generated catch block
