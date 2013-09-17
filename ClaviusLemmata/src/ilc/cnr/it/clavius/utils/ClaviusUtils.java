@@ -127,7 +127,7 @@ public class ClaviusUtils {
 					makeElement(line.split("\t")[0], line.split("\t")[1] + line.substring(line.lastIndexOf(9)), line.split("\t")[2],count));
 		}catch(ArrayIndexOutOfBoundsException e){
 			System.err.println(e.getMessage());
-			e.printStackTrace();
+			//e.printStackTrace();
 			doc.getChildren().get(8).addContent(
 					makeElement(line.split("\t")[0], line.split("\t")[1], line.split("\t")[0].toLowerCase()+"*",count));
 			doc.getChildren().get(9).addContent(
@@ -149,19 +149,19 @@ public class ClaviusUtils {
 	private static void handleSentenceFields(String line, List<Element> fields) {
 		// TODO Auto-generated method stub
 		fields.get(0).getAttribute("name").setValue("id");
-		fields.get(0).setText(line.substring(0, line.indexOf(":")));
+		fields.get(0).setText(line.substring(line.indexOf("_")+1, line.indexOf(":")));
 		fields.get(1).getAttribute("name").setValue("sentence_txt");
 		fields.get(1).setText(line.substring(line.indexOf(":")+1));
 		fields.get(2).getAttribute("name").setValue("image_url");
 		fields.get(2).setText("http://");
 		fields.get(3).getAttribute("name").setValue("sentence_id");
-		fields.get(3).setText(line.substring(0, line.indexOf(":")));
+		fields.get(3).setText("CTS urn for " + line.substring(0, line.indexOf(":")));
 		fields.get(4).getAttribute("name").setValue("image_id");
-		fields.get(4).setText(line.substring(0, line.indexOf(":")));
+		fields.get(4).setText("CITE urn for" + line.substring(0, line.indexOf(":")));
 		fields.get(5).getAttribute("name").setValue("info_sentence");
-		fields.get(5).setText(line.substring(0, line.indexOf(":")));
+		fields.get(5).setText("additional information for sentence " + line.substring(0, line.indexOf(":")));
 		fields.get(6).getAttribute("name").setValue("info_image");
-		fields.get(6).setText(line.substring(0, line.indexOf(":")));
+		fields.get(6).setText("additional information for image " + line.substring(0, line.indexOf(":")));
 		fields.get(7).getAttribute("name").setValue("nota");
 		fields.get(7).setText(line.substring(0, line.indexOf(":")));
 		fields.get(8).getAttribute("name").setValue("sentence_analysis");
