@@ -3,6 +3,8 @@
  */
 package ilc.cnr.it.clavius.utils;
 
+import ilc.cnr.it.clavius.constants.HandleContsants;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
@@ -105,7 +107,6 @@ public class ClaviusUtils {
 					System.err.println("riga di analisi: " + line);
 					wordcount++;
 					handleAnalysisFields(line,doc,wordcount);
-					//FIXME attenzione gestire ultimo elemento
 				}
 			}
 			docs.add(doc);
@@ -143,7 +144,10 @@ public class ClaviusUtils {
 				.setAttribute("form", token.toLowerCase())
 				.setAttribute("pos", pos)
 				.setAttribute("lemma", lemma)
-				.setAttribute("token",token);
+				.setAttribute("token",token)
+				.setAttribute("extended","")
+				.setAttribute("start", "0")
+				.setAttribute("end", "0");
 	}
 
 	private static void handleSentenceFields(String line, List<Element> fields) {
@@ -153,7 +157,7 @@ public class ClaviusUtils {
 		fields.get(1).getAttribute("name").setValue("sentence_txt");
 		fields.get(1).setText(line.substring(line.indexOf(":")+1));
 		fields.get(2).getAttribute("name").setValue("image_url");
-		fields.get(2).setText("http://");
+		fields.get(2).setText(line.substring(0, line.indexOf(":"))+".png");
 		fields.get(3).getAttribute("name").setValue("sentence_id");
 		fields.get(3).setText("CTS urn for " + line.substring(0, line.indexOf(":")));
 		fields.get(4).getAttribute("name").setValue("image_id");
@@ -190,7 +194,7 @@ public class ClaviusUtils {
 			System.out.println(doc.getChildText("field"));
 			try {
 			xo.output(new Document().setRootElement(new Element("add").setContent(tmp_doc)), 
-					new FileWriter("/Users/angelodel80/Risorse/sources/clavius/"+"Letter147_an-"+doc.getChildText("field")+".xml"));
+					new FileWriter( HandleContsants.getWorkDir()+ "Letter"+HandleContsants.getLetterRif() +"_an-"+doc.getChildText("field")+".xml"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -199,7 +203,5 @@ public class ClaviusUtils {
 		}
 		
 	}
-
-	//public static Document 
 
 }
