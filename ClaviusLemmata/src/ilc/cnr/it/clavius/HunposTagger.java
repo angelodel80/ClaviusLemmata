@@ -3,6 +3,7 @@
  */
 package ilc.cnr.it.clavius;
 
+import ilc.cnr.it.clavius.constants.HandleContsants;
 import ilc.cnr.it.clavius.utils.ClaviusUtils;
 
 import java.io.BufferedInputStream;
@@ -25,7 +26,7 @@ import org.apache.commons.io.*;
 public class HunposTagger {
 
 	private String pathToModel = "";
-	private String pathToBin = System.getenv("HOME")+System.getProperty("file.separator")+"Risorse"+System.getProperty("file.separator")+"tools"+System.getProperty("file.separator")+"hunpos-1.0-macosx"+System.getProperty("file.separator")+"hunpos-tag";
+	private String pathToBin = "";
 
 	private File modelFile;
 	private File hunposFile;
@@ -34,7 +35,6 @@ public class HunposTagger {
 	 * 
 	 */
 	public HunposTagger(String pathToModel, String pathToBin) {
-		// TODO Auto-generated constructor stub
 		init(pathToModel,pathToBin);
 	}
 
@@ -42,13 +42,12 @@ public class HunposTagger {
 	 * 
 	 */
 	public HunposTagger() {
-		// TODO Auto-generated constructor stub
 		//init(this.pathToModel, this.pathToBin);
+		setPathToBin(HandleContsants.getPathToHunPos());
 	}
 
 	private void init(String pathToModel, String pathToBin) {
-		// TODO Auto-generated method stub
-		this.pathToModel = System.getenv("HOME")+System.getProperty("file.separator")+"Risorse"+System.getProperty("file.separator")+"tools"+System.getProperty("file.separator")+pathToModel;
+		setPathToModel(HandleContsants.getPathToHunPosModel()+pathToModel);
 		if ( !("".equals(pathToBin)) && (pathToBin != null) ){
 			System.err.println("*****");
 			this.pathToBin = pathToBin;
@@ -67,7 +66,7 @@ public class HunposTagger {
 			System.err.println("the files are installed inside the environment");
 		}catch(FileNotFoundException e){
 			e.printStackTrace();
-			System.err.println("file non trovato: "+e.getMessage());
+			System.err.println("file not found: "+e.getMessage());
 		}finally{}
 
 
@@ -85,43 +84,14 @@ public class HunposTagger {
 		vertMsgBuilder.append("\n");
 		verticalMsg = vertMsgBuilder.toString();
 
-		String verticalTagged =  runProcess(verticalMsg); //runCommand(""); 
+		String verticalTagged =  runProcess(verticalMsg);
 		return verticalTagged;
 	}
 
-	private String runCommand(String argument){
-		String ret = "";
-		Runtime rt = java.lang.Runtime.getRuntime();
-		Process p;
-
-		try {
-			p = rt.exec("ls /Users");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			p = null;
-		}
-
-		// chiamare funzione per copia stringa
-		ret = ClaviusUtils.streamToString(p.getInputStream());
-		return ret;
-	}
-
 	private String runProcess(String inMsg){
-		String ret = "";//"\n********\n";
-		ProcessBuilder procBuild = new ProcessBuilder(pathToBin, pathToModel);
+		String ret = "";
+		ProcessBuilder procBuild = new ProcessBuilder(getPathToBin(), getPathToModel());
 		final Process proc;
-
-//		Map<String, String> env = procBuild.environment();
-//		StringBuilder outStr = new StringBuilder();
-//		for (String envName : env.keySet()) {
-//			outStr.append(String.format("%s=%s%n",
-//					envName,
-//					env.get(envName)));
-//		}
-//		outStr.append("********");
-		//ret = outStr.toString();
-		//System.out.format("%s",inMsg);
 
 		try {
 			
@@ -150,9 +120,36 @@ public class HunposTagger {
 	}
 
 	public void printPath(){
-		System.err.println("the path model is: " + this.pathToModel);
-		System.err.println("the path bin is: " + this.pathToBin);
-		//System.err.println(System.getenv("HOME"));
+		System.err.println("the path model is: " + getPathToModel());
+		System.err.println("the path bin is: " + getPathToBin());
+	}
+
+	/**
+	 * @return the pathToBin
+	 */
+	public String getPathToBin() {
+		return pathToBin;
+	}
+
+	/**
+	 * @param pathToBin the pathToBin to set
+	 */
+	public void setPathToBin(String pathToBin) {
+		this.pathToBin = pathToBin;
+	}
+
+	/**
+	 * @return the pathToModel
+	 */
+	public String getPathToModel() {
+		return pathToModel;
+	}
+
+	/**
+	 * @param pathToModel the pathToModel to set
+	 */
+	public void setPathToModel(String pathToModel) {
+		this.pathToModel = pathToModel;
 	}
 
 

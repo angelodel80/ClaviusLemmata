@@ -15,6 +15,28 @@ public class HandleContsants {
 	private static String taggedFile = "/Users/angelodel80/Risorse/sources/clavius/TaggedFile.txt";
 	private static String workDir = "/Users/angelodel80/Risorse/sources/clavius/";
 	private static String letterRif = "147";
+	
+	private static String pathToHunPos = System.getenv("HOME")+System.getProperty("file.separator")+"Risorse"+System.getProperty("file.separator")+"tools"+System.getProperty("file.separator")+"hunpos-1.0-macosx"+System.getProperty("file.separator")+"hunpos-tag";
+	private static String pathToHunPosModel = System.getenv("HOME")+System.getProperty("file.separator")+"Risorse"+System.getProperty("file.separator")+"tools"+System.getProperty("file.separator");
+	
+	private static String xpathForSentences = "/TEI/text/body/div/p/s";
+	private static String atttributeSentencesName = "n";
+	private static String xpathForText = "node() | ./w/text() | ./choice/expan/text() | ./rs/text() | ./dateline/text()";
+	
+	/**
+	 * @return the pathToHunPos
+	 */
+	public static String getPathToHunPos() {
+		return pathToHunPos;
+	}
+
+	/**
+	 * @param pathToHunPos the pathToHunPos to set
+	 */
+	public static void setPathToHunPos(String pathToHunPos) {
+		HandleContsants.pathToHunPos = pathToHunPos;
+	}
+
 	/**
 	 * @return the letterRif
 	 */
@@ -60,15 +82,15 @@ public class HandleContsants {
 	/**
 	 * @return the tabFileAnalized
 	 */
-	public static String getTabFileAnalized() {
+	public static String getTabFileAnalyzed() {
 		return tabFileAnalyzed;
 	}
 
 	/**
-	 * @param tabFileAnalized the tabFileAnalized to set
+	 * @param tabFileAnalyzed the tabFileAnalized to set
 	 */
-	public static void setTabFileAnalized(String tabFileAnalized) {
-		HandleContsants.tabFileAnalyzed = tabFileAnalized;
+	public static void setTabFileAnalyzed(String tabFileAnalyzed) {
+		HandleContsants.tabFileAnalyzed = tabFileAnalyzed;
 	}
 
 	/**
@@ -97,7 +119,7 @@ public class HandleContsants {
 	 *            the xmtTeiFile to set
 	 */
 	private void setXmtTeiFile(String xmtTeiFile) {
-		this.xmtTeiFile = xmtTeiFile;
+		HandleContsants.xmtTeiFile = xmtTeiFile;
 	}
 
 	/**
@@ -105,6 +127,62 @@ public class HandleContsants {
 	 */
 	public HandleContsants() {
 		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @return the pathToHunPosModel
+	 */
+	public static String getPathToHunPosModel() {
+		return pathToHunPosModel;
+	}
+
+	/**
+	 * @param pathToHunPosModel the pathToHunPosModel to set
+	 */
+	public static void setPathToHunPosModel(String pathToHunPosModel) {
+		HandleContsants.pathToHunPosModel = pathToHunPosModel;
+	}
+
+	/**
+	 * @return the xpathForSentences
+	 */
+	public static String getXpathForSentences() {
+		return xpathForSentences;
+	}
+
+	/**
+	 * @param xpathForSentences the xpathForSentences to set
+	 */
+	public static void setXpathForSentences(String xpathForSentences) {
+		HandleContsants.xpathForSentences = xpathForSentences;
+	}
+
+	/**
+	 * @return the atttributeSentencesName
+	 */
+	public static String getAtttributeSentencesName() {
+		return atttributeSentencesName;
+	}
+
+	/**
+	 * @param atttributeSentencesName the atttributeSentencesName to set
+	 */
+	public static void setAtttributeSentencesName(String atttributeSentencesName) {
+		HandleContsants.atttributeSentencesName = atttributeSentencesName;
+	}
+
+	/**
+	 * @return the xpathForText
+	 */
+	public static String getXpathForText() {
+		return xpathForText;
+	}
+
+	/**
+	 * @param xpathForText the xpathForText to set
+	 */
+	public static void setXpathForText(String xpathForText) {
+		HandleContsants.xpathForText = xpathForText;
 	}
 
 }

@@ -31,7 +31,6 @@ public class ClaviusMain {
 	 * 
 	 */
 	public ClaviusMain() {
-		// TODO Auto-generated constructor stub
 		this.msg = "this is the default message!";
 	}
 
@@ -48,7 +47,6 @@ public class ClaviusMain {
 	 */
 
 	private void process(String pathModel, String pathBin) {
-		// TODO Auto-generated method stub
 		HunposTagger hunPos = new HunposTagger(pathModel, pathBin);
 		String msgTagged = hunPos.tag(this.msg);
 		//System.out.println(msgTagged);
@@ -59,7 +57,6 @@ public class ClaviusMain {
 
 	
 	public void writeOut(String outPath) {
-		// TODO Auto-generated method stub
 		try{
 			if(""==outBuilder.toString() | null==outBuilder)
 				throw  new IOException("errore nella srittura dell'output");
@@ -148,7 +145,7 @@ public class ClaviusMain {
 		//ParseToken.init(HandleContants.getTaggedFile(), HandleContants.getTaggedFile());
 		//ParseToken.run();
 		try {
-			Document xmlSentences = TextUtils.TabToXml(HandleContsants.getTabFileAnalized(), true);
+			Document xmlSentences = TextUtils.TabToXml(HandleContsants.getTabFileAnalyzed(), true);
 			ClaviusUtils.makeSentenceXML(xmlSentences);
 		} catch (JDOMException e) {
 			// TODO Auto-generated catch block

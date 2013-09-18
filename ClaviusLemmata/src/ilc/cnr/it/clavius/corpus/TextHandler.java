@@ -3,6 +3,7 @@
  */
 package ilc.cnr.it.clavius.corpus;
 
+import ilc.cnr.it.clavius.constants.HandleContsants;
 import ilc.cnr.it.clavius.utils.TextUtils;
 
 import java.io.IOException;
@@ -35,7 +36,6 @@ public class TextHandler {
 	 * 
 	 */
 	public TextHandler() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public Map<String, String> getSentences(String filePath){
@@ -43,14 +43,12 @@ public class TextHandler {
 		try {
 			Document doc = TextUtils.fileToDocument(filePath);
 			Namespace ns = doc.getRootElement().getNamespace();
-			System.err.println("prefix: " + ns.getPrefix());
-			System.err.println("names: " + ns.getURI());
 			XPathExpression<Element> sentencesExpression = 
-					XPathFactory.instance().compile("/TEI/text/body/div/p/s", Filters.element(), null, Namespace.getNamespace(ns.getPrefix(),ns.getURI()));
+					XPathFactory.instance().compile(HandleContsants.getXpathForSentences(), Filters.element(), null, Namespace.getNamespace(ns.getPrefix(),ns.getURI()));
 			List<Element> listOfSentences = sentencesExpression.evaluate(doc);
 
 			if (null != listOfSentences){
-				System.err.println(listOfSentences.size());
+				System.err.println("number of sentences: " + listOfSentences.size());
 				sentences = new LinkedHashMap<String, String>();
 				for (Element sent : listOfSentences) {
 					String[] sentence = getSentence(sent);
@@ -59,13 +57,9 @@ public class TextHandler {
 
 			}
 
-
-
 		} catch (JDOMException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -75,31 +69,14 @@ public class TextHandler {
 
 	public String[] getSentence(Element sent){
 		String sentence[] = new String[2];
-		sentence[0] = sent.getAttributeValue("n");
+		sentence[0] = sent.getAttributeValue(HandleContsants.getAtttributeSentencesName());
 		sentence[1] = getTextValue(sent);
 		return sentence;
 
 	}
-	
+
 	private String getTextValue(Element sent){
 		StringBuilder sb = new StringBuilder();
-		XMLOutputter xo = new XMLOutputter(Format.getPrettyFormat());
-		List<Content> conts = sent.getContent();
-		List<Element> Childs = sent.getChildren();
-		//System.out.println("in getTextValue()");
-		
-//		System.out.println("xo String Content: " + xo.outputString(conts));
-		
-//		for (Content content : conts) {
-//			System.out.println(content.getCType()+" : "+content.getParentElement().getAttributeValue("n"));
-//			System.out.println("content: " + content.);
-//			if(content.getCType() == content.getCType().Text){
-//				sb.append(content.getValue());
-//			}else if(content.getCType() == content.getCType().Element){
-//				System.out.println("elementToString: " + content.toString());
-//				content.getCType().
-//			}
-//		}
 		
 		XPathExpression<Element> sentencesExpression = 
 				XPathFactory.instance().compile(".//lb", Filters.element(), null, Namespace.getNamespace("",""));
@@ -111,38 +88,40 @@ public class TextHandler {
 			//System.out.println("word: " + lb.getAttributeValue("n"));
 			lb.detach();
 		}
-		
+
 		String xpathWord = "./w";
 		XPathExpression<Element> wordExpression = 
 				XPathFactory.instance().compile(xpathWord, Filters.element(), null, Namespace.getNamespace("",""));
 		List<Element> wordlist = wordExpression.evaluate(sent);
 		if(wordlist == null || wordlist.size() == 0){
-			//System.out.println("la sentence " + sent.getAttributeValue("n") + " non ha tag <w />");
+			System.err.println("the sentence " + sent.getAttributeValue(HandleContsants.getAtttributeSentencesName()) + " has not tag <w />");
 		}
 		for (Element word : wordlist) {
 			word.setText(word.getValue().replaceAll("\\s+", ""));
+			
 			//System.out.println("word: " + word.getText());
 			//sb.append(word.getTextNormalize());
 		}
-		
-		
-		String xpath = "node() | ./w/text() | ./choice/expan/text() | ./rs/text() | ./dateline/text()";
+
+
+		String xpath = HandleContsants.getXpathForText();
 		//String xpath = "./w/text()";
 		XPathExpression<Text> textExpression = 
 				XPathFactory.instance().compile(xpath, Filters.textOnly(), null, Namespace.getNamespace("",""));
 		List<Text> textlist = textExpression.evaluate(sent);
 		if(textlist == null || textlist.size() == 0){
-			//System.out.println("la lista del testo è vuota della sent" + sent.getAttributeValue("n"));
+			//System.out.println("the text list is empty of the sentence: " + sent.getAttributeValue("n"));
 		}
 		for (Text txt : textlist) {
 			//System.out.println("txt: " + sent.getAttributeValue("n")+ ":" + txt.getText());
 			sb.append(txt.getTextNormalize()+" ");
 		}
-		
+
+		//XMLOutputter xo = new XMLOutputter(Format.getPrettyFormat());
 		//System.out.println("textValue: " + sb.toString());
 		//System.out.println("xo String sent: " + xo.outputString(sent));
 		return sb.toString().replaceAll("\\s+", " ").replaceAll("\\s+([\\.;:!?,])", "$1");
 	}
-	
+
 
 }
