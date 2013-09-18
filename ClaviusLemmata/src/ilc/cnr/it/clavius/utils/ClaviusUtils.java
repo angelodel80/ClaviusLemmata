@@ -19,7 +19,6 @@ import org.apache.commons.io.Charsets;
 import org.apache.commons.io.IOUtils;
 import org.jdom2.Document;
 import org.jdom2.Element;
-import org.jdom2.filter.ElementFilter;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
@@ -33,7 +32,6 @@ public class ClaviusUtils {
 	 * 
 	 */
 	public ClaviusUtils() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public static void verifyFile( File aFile, boolean w ) {
@@ -64,7 +62,6 @@ public class ClaviusUtils {
 			try {
 				IOUtils.copy(binp, writer, Charsets.UTF_8);
 			} catch (IOException ex) {
-				// TODO Auto-generated catch block
 				ex.printStackTrace();
 			}
 
@@ -74,7 +71,6 @@ public class ClaviusUtils {
 				binp.close();
 				writer.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -83,7 +79,6 @@ public class ClaviusUtils {
 	}
 
 	public static List<Element> makeDocs(BufferedReader reader) {
-		// TODO Auto-generated method stub
 		List<Element> docs = new ArrayList<Element>();
 		String line = "";
 		int wordcount = 0;
@@ -112,7 +107,6 @@ public class ClaviusUtils {
 			docs.add(doc);
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -120,7 +114,6 @@ public class ClaviusUtils {
 	}
 
 	private static void handleAnalysisFields(String line, Element doc, int count) {
-		// TODO Auto-generated method stub
 		try{
 			doc.getChildren().get(8).addContent(
 					makeElement(line.split("\t")[0], line.split("\t")[1], line.split("\t")[2],count));
@@ -151,7 +144,6 @@ public class ClaviusUtils {
 	}
 
 	private static void handleSentenceFields(String line, List<Element> fields) {
-		// TODO Auto-generated method stub
 		fields.get(0).getAttribute("name").setValue("id");
 		fields.get(0).setText(line.substring(line.indexOf("_")+1, line.indexOf(":")));
 		fields.get(1).getAttribute("name").setValue("sentence_txt");
@@ -173,7 +165,6 @@ public class ClaviusUtils {
 	}
 
 	private static List<Element> makeFields(int n) {
-		// TODO Auto-generated method stub
 		List<Element> fields = new ArrayList<Element>(n);
 		for(int i = 0; i<n; i++){
 			Element ele = new Element("field").setAttribute("name", String.valueOf(i));
@@ -183,7 +174,6 @@ public class ClaviusUtils {
 	}
 
 	public static void makeSentenceXML(Document xmlSentences) {
-		// TODO Auto-generated method stub
 		System.out.println("in makesentenceXML");
 		XMLOutputter xo = new XMLOutputter(Format.getPrettyFormat());
 		Element root = xmlSentences.getRootElement();
@@ -196,7 +186,6 @@ public class ClaviusUtils {
 			xo.output(new Document().setRootElement(new Element("add").setContent(tmp_doc)), 
 					new FileWriter( HandleContsants.getWorkDir()+ "Letter"+HandleContsants.getLetterRif() +"_an-"+doc.getChildText("field")+".xml"));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

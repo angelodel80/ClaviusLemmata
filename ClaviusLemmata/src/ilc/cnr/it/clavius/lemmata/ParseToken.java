@@ -3,6 +3,8 @@
  */
 package ilc.cnr.it.clavius.lemmata;
 
+import ilc.cnr.it.clavius.constants.HandleContsants;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.sql.Connection;
@@ -21,14 +23,13 @@ public class ParseToken extends ParseText {
 	 * 
 	 */
 	public ParseToken() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public static boolean run() {
 		System.out.println(outFile.getAbsolutePath());
 		boolean ret = false;
 		BufferedReader reader = null;
-		outString = new StringBuilder("----- START FILE -----\n");
+		outString = new StringBuilder();
 		try {
 			reader = getReader(myFile);
 			leggi(reader);
@@ -40,7 +41,6 @@ public class ParseToken extends ParseText {
 			try {
 				reader.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -53,18 +53,16 @@ public class ParseToken extends ParseText {
 		try {
 			while (null != (line = reader.readLine())){
 				System.out.println(line);
-				//outString.append("\n\n"+line+"\n");
 				if(line.split("\t").length < 2){
-					outString.append(line+"\n");
+					outString.append(line+"\n"); // save the sentence content
 
 				}
 				else{
-					elabora(line);
+					elabora(line); // manage the analysis
 				}
 			}
 			ret = true;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return ret;
@@ -73,30 +71,25 @@ public class ParseToken extends ParseText {
 	
 
 	public static boolean elabora(String line){
-		System.err.println("in elabora()");
 		boolean ret = false;
 		Connection connection = null;
 		Statement stm = null;
 		ResultSet rs = null;
 
-		//String query = "select * from hib_lemmas where lemma_text =\"";
-		// esempio query select lemma_text, morph_code from hib_parses as f left join hib_lemmas as l on f.lemma_id = l.lemma_id where f.form = "erat" and f.morph_code like "v%" 
-		//String query = "select count(morph_code) as morph_count, lemma_id from hib_parses where bare_form =\"";
-		String query = "SELECT lemma_text, morph_code FROM hib_parses as f LEFT JOIN hib_lemmas as l on f.lemma_id = l.lemma_id WHERE f.bare_form = \"{[?form?]}\" and f.morph_code like \"{[?pos?]}%\"" ;
+		String query = HandleContsants.getLemmaQuery();
 		if( (null!= line) && (line.split("\t").length >= 2) ){
 			String token = line.split("\t")[0];
 			String morphoTag = line.split("\t")[1];
 			String pos = morphoTag.substring(0, 1);
-			System.out.println("TOKEN: "+ token);
-			System.out.println("PoS: "+ pos);
+			//System.out.println("TOKEN: "+ token);
+			//System.out.println("PoS: "+ pos);
 			//FIXME
-			//IMPORTANTE: le attribuzioni dei tratti morfologici possono essere sbagliate, per esempio HunPos indica Occupazionibus come nome maschile, invece p femminile. Probabilmente utilizzando il lessico tale fenomeno diventa irrilevante
+			//IMPORTANTE: le attribuzioni dei tratti morfologici possono essere sbagliate, per esempio HunPos indica Occupazionibus come nome maschile, invece è femminile. Probabilmente utilizzando un lessico tale fenomeno diventa irrilevante
 
 			//			outString.append("TOKEN: "+ token +"\n");
 			//
 			if(!("".equals(token))){
-				//query = query+token+"\"";
-				query = query.replaceFirst("\\{\\[\\?form\\?\\]\\}", token).replaceFirst("\\{\\[\\?pos\\?\\]\\}", pos);
+				query = query.replaceFirst(HandleContsants.getFormReplace(), token).replaceFirst(HandleContsants.getPosReplace(), pos);
 				System.out.println(query);
 				//				// FIXME group by
 				//				query = query+" group by lemma_id";
@@ -118,14 +111,12 @@ public class ParseToken extends ParseText {
 					//
 					//
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} finally{
 					try {
 						stm.close();
 						connection.close();
 					} catch (SQLException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 
@@ -141,26 +132,13 @@ public class ParseToken extends ParseText {
 		Connection con = null;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://192.168.92.229:3306/perseus", "angelodel80", "190280");
+			con = DriverManager.getConnection(HandleContsants.getDataBase(), HandleContsants.getDbUser(), HandleContsants.getDbPassword());
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return con;
 	}
-
-	/**
-	 * @param args
-	 */
-//	public static void main(String[] args) {
-//		// TODO Auto-generated method stub
-//
-//		if (init(args[0], args[1]))
-//			run();
-//
-//	}
 
 }

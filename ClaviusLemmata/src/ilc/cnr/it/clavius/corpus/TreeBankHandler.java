@@ -3,6 +3,7 @@
  */
 package ilc.cnr.it.clavius.corpus;
 
+import ilc.cnr.it.clavius.constants.HandleContsants;
 import ilc.cnr.it.clavius.utils.ClaviusUtils;
 
 import java.io.BufferedWriter;
@@ -29,19 +30,18 @@ import org.jdom2.util.IteratorIterable;
  */
 public class TreeBankHandler {
 
-	File corpusFile;
+	File corpusFile = null;
 	Document corpus = null;
-	String contextPath = "/Users/angelodel80/Risorse/sources/";
-	String fileOut = "corpusForTrain";
+	String fileOut = "";
 	
 	/**
 	 * 
 	 */
 	public TreeBankHandler(String fileName) {
-		// TODO Auto-generated constructor stub
-		this.corpusFile = new File(getContextPath()+fileName);
+		this.corpusFile = new File(HandleContsants.getContextForTrain()+fileName);
+		this.fileOut = HandleContsants.getTrainFileOut();
 		try{
-			ClaviusUtils.verifyFile(this.corpusFile, false);
+			ClaviusUtils.verifyFile(getCorpusFile(), false);
 			initDocument();
 		}catch(IllegalArgumentException ae){
 			System.err.println(ae.getMessage());
@@ -51,12 +51,11 @@ public class TreeBankHandler {
 	private void initDocument(){
 		try{
 			SAXBuilder sb = new SAXBuilder();
-			setCorpus(sb.build(this.corpusFile));
+			setCorpus(sb.build(getCorpusFile()));
 		}catch(JDOMException je){
 			System.err.println(je.getMessage());
 			je.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -64,10 +63,6 @@ public class TreeBankHandler {
 	public void transformToTrain(){
 		Element root = getCorpus().getRootElement();
 		System.err.println(root.toString());
-//		List<Element> annotators = root.getChildren("annotator");
-//		for (Element annotator : annotators) {
-//			System.out.println(annotator.getChild("name").getText());
-//		}
 		root.removeChildren("annotator");
 		List<Element> sentences = root.getChildren("sentence");
 		for (Element sentence : sentences) {
@@ -88,9 +83,7 @@ public class TreeBankHandler {
 			word.removeAttribute("relation");
 		}
 	
-		Namespace additional = root.getNamespace("xsi");
 		root.setNamespace(Namespace.NO_NAMESPACE);
-		//root.setName("sentences");
 		
 		Element newRoot = new Element("sentences").setNamespace(Namespace.NO_NAMESPACE);
 		newRoot.setContent(root.cloneContent());
@@ -101,7 +94,6 @@ public class TreeBankHandler {
 			printFileXML();
 			printFileTabular();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -112,10 +104,10 @@ public class TreeBankHandler {
 			XMLOutputter xout = new XMLOutputter();
 			xout.setFormat(Format.getPrettyFormat());
 			//xout.output(getCorpus(), System.out);
-			xout.output(getCorpus(), new FileWriter(getContextPath()+getFileOut()+".xml"));
+			xout.output(getCorpus(), new FileWriter( HandleContsants.getContextForTrain()+getFileOut()+".xml"));
 		}
 		else{
-			System.out.println("errore nella stampa del documento XML");
+			System.err.println("The XML print got an error");
 		}
 	}
 	
@@ -133,7 +125,7 @@ public class TreeBankHandler {
 				
 			}
 			
-			BufferedWriter out = new BufferedWriter(new FileWriter(getContextPath()+getFileOut()+".txt"));  
+			BufferedWriter out = new BufferedWriter(new FileWriter(HandleContsants.getContextForTrain()+getFileOut()+".txt"));  
 	        out.write(sout.toString());  
 	        out.flush();  
 	        out.close();
@@ -155,20 +147,6 @@ public class TreeBankHandler {
 	}
 
 	/**
-	 * @return the contextPath
-	 */
-	public String getContextPath() {
-		return contextPath;
-	}
-
-	/**
-	 * @param contextPath the contextPath to set
-	 */
-	public void setContextPath(String contextPath) {
-		this.contextPath = contextPath;
-	}
-
-	/**
 	 * @return the fileOut
 	 */
 	public String getFileOut() {
@@ -180,6 +158,20 @@ public class TreeBankHandler {
 	 */
 	public void setFileOut(String fileOut) {
 		this.fileOut = fileOut;
+	}
+
+	/**
+	 * @return the corpusFile
+	 */
+	public File getCorpusFile() {
+		return corpusFile;
+	}
+
+	/**
+	 * @param corpusFile the corpusFile to set
+	 */
+	public void setCorpusFile(File corpusFile) {
+		this.corpusFile = corpusFile;
 	}
 	
 

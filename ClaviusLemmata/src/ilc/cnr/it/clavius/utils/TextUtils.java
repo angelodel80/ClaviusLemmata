@@ -3,6 +3,7 @@
  */
 package ilc.cnr.it.clavius.utils;
 
+import ilc.cnr.it.clavius.constants.HandleContsants;
 import ilc.cnr.it.clavius.lemmata.ParseText;
 
 import java.io.BufferedReader;
@@ -35,7 +36,6 @@ public class TextUtils {
 	 * 
 	 */
 	public TextUtils() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public static Document fileToDocument (String filePath) throws JDOMException, IOException{
@@ -64,16 +64,13 @@ public class TextUtils {
 				writer.flush();
 				writer.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
 		}
 	}
 	
-//	public static BufferedReader getReader(File inFile) throws UnsupportedEncodingException, FileNotFoundException{
-//		return new BufferedReader(new InputStreamReader( new FileInputStream(inFile), "utf-8"));
-//	}
+
 	
 	public static Document TabToXml(String tabFile, boolean aporia) throws JDOMException, IOException{
 		Document doc = null;
@@ -90,7 +87,7 @@ public class TextUtils {
 		Element addNode = new Element("add").addContent(docs);
 		doc = new Document(addNode);
 		XMLOutputter xo = new XMLOutputter(Format.getPrettyFormat());
-		xo.output(doc, new FileWriter(tabFile.substring(0, tabFile.lastIndexOf("/"))+"/Letter147_sentences_Analysed.xml"));
+		xo.output(doc, new FileWriter(tabFile.substring(0, tabFile.lastIndexOf("/"))+HandleContsants.getLetterAnalyzed()+".xml"));
 		return doc;
 	}
 
