@@ -3,7 +3,7 @@
  */
 package ilc.cnr.it.clavius.utils;
 
-import ilc.cnr.it.clavius.constants.HandleContsants;
+import ilc.cnr.it.clavius.constants.HandleConstants;
 import ilc.cnr.it.clavius.lemmata.ParseText;
 
 import java.io.BufferedReader;
@@ -87,7 +87,7 @@ public class TextUtils {
 		Element addNode = new Element("add").addContent(docs);
 		doc = new Document(addNode);
 		XMLOutputter xo = new XMLOutputter(Format.getPrettyFormat());
-		xo.output(doc, new FileWriter(tabFile.substring(0, tabFile.lastIndexOf("/"))+HandleContsants.getLetterAnalyzed()+".xml"));
+		xo.output(doc, new FileWriter(tabFile.substring(0, tabFile.lastIndexOf("/"))+HandleConstants.getLetterAnalyzed()+".xml"));
 		return doc;
 	}
 

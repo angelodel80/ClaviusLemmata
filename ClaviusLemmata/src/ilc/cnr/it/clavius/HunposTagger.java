@@ -3,7 +3,7 @@
  */
 package ilc.cnr.it.clavius;
 
-import ilc.cnr.it.clavius.constants.HandleContsants;
+import ilc.cnr.it.clavius.constants.HandleConstants;
 import ilc.cnr.it.clavius.utils.ClaviusUtils;
 
 import java.io.BufferedInputStream;
@@ -43,11 +43,11 @@ public class HunposTagger {
 	 */
 	public HunposTagger() {
 		//init(this.pathToModel, this.pathToBin);
-		setPathToBin(HandleContsants.getPathToHunPos());
+		setPathToBin(HandleConstants.getPathToHunPos());
 	}
 
 	private void init(String pathToModel, String pathToBin) {
-		setPathToModel(HandleContsants.getPathToHunPosModel()+pathToModel);
+		setPathToModel(HandleConstants.getPathToHunPosModel()+pathToModel);
 		if ( !("".equals(pathToBin)) && (pathToBin != null) ){
 			System.err.println("*****");
 			this.pathToBin = pathToBin;

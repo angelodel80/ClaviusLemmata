@@ -3,7 +3,7 @@
  */
 package ilc.cnr.it.clavius.lemmata;
 
-import ilc.cnr.it.clavius.constants.HandleContsants;
+import ilc.cnr.it.clavius.constants.HandleConstants;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -76,7 +76,7 @@ public class ParseToken extends ParseText {
 		Statement stm = null;
 		ResultSet rs = null;
 
-		String query = HandleContsants.getLemmaQuery();
+		String query = HandleConstants.getLemmaQuery();
 		if( (null!= line) && (line.split("\t").length >= 2) ){
 			String token = line.split("\t")[0];
 			String morphoTag = line.split("\t")[1];
@@ -89,7 +89,7 @@ public class ParseToken extends ParseText {
 			//			outString.append("TOKEN: "+ token +"\n");
 			//
 			if(!("".equals(token))){
-				query = query.replaceFirst(HandleContsants.getFormReplace(), token).replaceFirst(HandleContsants.getPosReplace(), pos);
+				query = query.replaceFirst(HandleConstants.getFormReplace(), token).replaceFirst(HandleConstants.getPosReplace(), pos);
 				System.out.println(query);
 				//				// FIXME group by
 				//				query = query+" group by lemma_id";
@@ -132,7 +132,7 @@ public class ParseToken extends ParseText {
 		Connection con = null;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection(HandleContsants.getDataBase(), HandleContsants.getDbUser(), HandleContsants.getDbPassword());
+			con = DriverManager.getConnection(HandleConstants.getDataBase(), HandleConstants.getDbUser(), HandleConstants.getDbPassword());
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {

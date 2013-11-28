@@ -7,23 +7,23 @@ package ilc.cnr.it.clavius.constants;
  * @author angelodel80
  * 
  */
-public class HandleContsants {
+public class HandleConstants {
 	
-	private static String xmtTeiFile = "/Users/angelodel80/Risorse/sources/clavius/147APUG530cc_129130_xml.xml";
+	private static String xmlTeiFile = "/Users/angelodel80/Risorse/sources/clavius/calviusTraduzioni/ClaviusResources/147/147_APUG_530_cc.129-130.xml";
 	private static String modelforHunPos = "testFirst.model";
 	private static String tabFileAnalyzed = "/Users/angelodel80/Risorse/sources/clavius/out-tokensLemmatized-11092013.txt";
 	private static String taggedFile = "/Users/angelodel80/Risorse/sources/clavius/TaggedFile.txt";
 	private static String workDir = "/Users/angelodel80/Risorse/sources/clavius/";
 	private static String letterRif = "147";
 	
-	private static String letterAnalyzed = "/Letter"+HandleContsants.letterRif+"_sentences_Analyzed";
+	private static String letterAnalyzed = "/Letter"+HandleConstants.letterRif+"_sentences_Analyzed";
 	
 	private static String pathToHunPos = System.getenv("HOME")+System.getProperty("file.separator")+"Risorse"+System.getProperty("file.separator")+"tools"+System.getProperty("file.separator")+"hunpos-1.0-macosx"+System.getProperty("file.separator")+"hunpos-tag";
 	private static String pathToHunPosModel = System.getenv("HOME")+System.getProperty("file.separator")+"Risorse"+System.getProperty("file.separator")+"tools"+System.getProperty("file.separator");
 	
-	private static String xpathForSentences = "/TEI/text/body/div/p/s";
+	private static String xpathForSentences = "/tei:TEI/tei:text/tei:body/tei:div/tei:div/tei:ab/tei:s";
 	private static String atttributeSentencesName = "n";
-	private static String xpathForText = "node() | ./w/text() | ./choice/expan/text() | ./rs/text() | ./dateline/text()";
+	private static String xpathForText = "node() | ./tei:w/text() | ./tei:choice/tei:expan/text() | ./tei:code/text() | ./tei:date/text() | ./tei:signatures/text() | ./tei:signatures/tei:choice/tei:expan/text()";
 	
 	private static String contextForTrain = "/Users/angelodel80/Risorse/sources/";
 	private static String trainFileOut = "corpusForTrain";
@@ -47,7 +47,7 @@ public class HandleContsants {
 	 * @param pathToHunPos the pathToHunPos to set
 	 */
 	public static void setPathToHunPos(String pathToHunPos) {
-		HandleContsants.pathToHunPos = pathToHunPos;
+		HandleConstants.pathToHunPos = pathToHunPos;
 	}
 
 	/**
@@ -61,7 +61,7 @@ public class HandleContsants {
 	 * @param letterRif the letterRif to set
 	 */
 	public static void setLetterRif(String letterRif) {
-		HandleContsants.letterRif = letterRif;
+		HandleConstants.letterRif = letterRif;
 	}
 
 	/**
@@ -75,7 +75,7 @@ public class HandleContsants {
 	 * @param workDir the workDir to set
 	 */
 	public static void setWorkDir(String workDir) {
-		HandleContsants.workDir = workDir;
+		HandleConstants.workDir = workDir;
 	}
 
 	/**
@@ -89,7 +89,7 @@ public class HandleContsants {
 	 * @param taggedFile the taggedFile to set
 	 */
 	public static void setTaggedFile(String taggedFile) {
-		HandleContsants.taggedFile = taggedFile;
+		HandleConstants.taggedFile = taggedFile;
 	}
 
 	/**
@@ -103,7 +103,7 @@ public class HandleContsants {
 	 * @param tabFileAnalyzed the tabFileAnalized to set
 	 */
 	public static void setTabFileAnalyzed(String tabFileAnalyzed) {
-		HandleContsants.tabFileAnalyzed = tabFileAnalyzed;
+		HandleConstants.tabFileAnalyzed = tabFileAnalyzed;
 	}
 
 	/**
@@ -117,28 +117,28 @@ public class HandleContsants {
 	 * @param modelforHunPos the modelforHunPos to set
 	 */
 	public static void setModelforHunPos(String modelforHunPos) {
-		HandleContsants.modelforHunPos = modelforHunPos;
+		HandleConstants.modelforHunPos = modelforHunPos;
 	}
 
 	/**
 	 * @return the xmtTeiFile
 	 */
-	public static String getXmtTeiFile() {
-		return xmtTeiFile;
+	public static String getXmlTeiFile() {
+		return xmlTeiFile;
 	}
 
 	/**
-	 * @param xmtTeiFile
+	 * @param xmlTeiFile
 	 *            the xmtTeiFile to set
 	 */
-	private void setXmtTeiFile(String xmtTeiFile) {
-		HandleContsants.xmtTeiFile = xmtTeiFile;
+	private void setXmlTeiFile(String xmlTeiFile) {
+		HandleConstants.xmlTeiFile = xmlTeiFile;
 	}
 
 	/**
 	 * 
 	 */
-	public HandleContsants() {
+	public HandleConstants() {
 		// TODO Auto-generated constructor stub
 	}
 
@@ -153,7 +153,7 @@ public class HandleContsants {
 	 * @param pathToHunPosModel the pathToHunPosModel to set
 	 */
 	public static void setPathToHunPosModel(String pathToHunPosModel) {
-		HandleContsants.pathToHunPosModel = pathToHunPosModel;
+		HandleConstants.pathToHunPosModel = pathToHunPosModel;
 	}
 
 	/**
@@ -167,7 +167,7 @@ public class HandleContsants {
 	 * @param xpathForSentences the xpathForSentences to set
 	 */
 	public static void setXpathForSentences(String xpathForSentences) {
-		HandleContsants.xpathForSentences = xpathForSentences;
+		HandleConstants.xpathForSentences = xpathForSentences;
 	}
 
 	/**
@@ -181,7 +181,7 @@ public class HandleContsants {
 	 * @param atttributeSentencesName the atttributeSentencesName to set
 	 */
 	public static void setAtttributeSentencesName(String atttributeSentencesName) {
-		HandleContsants.atttributeSentencesName = atttributeSentencesName;
+		HandleConstants.atttributeSentencesName = atttributeSentencesName;
 	}
 
 	/**
@@ -195,7 +195,7 @@ public class HandleContsants {
 	 * @param xpathForText the xpathForText to set
 	 */
 	public static void setXpathForText(String xpathForText) {
-		HandleContsants.xpathForText = xpathForText;
+		HandleConstants.xpathForText = xpathForText;
 	}
 
 	/**
@@ -209,7 +209,7 @@ public class HandleContsants {
 	 * @param contextForTrain the contextForTrain to set
 	 */
 	public static void setContextForTrain(String contextForTrain) {
-		HandleContsants.contextForTrain = contextForTrain;
+		HandleConstants.contextForTrain = contextForTrain;
 	}
 
 	/**
@@ -223,7 +223,7 @@ public class HandleContsants {
 	 * @param trainFileOut the trainFileOut to set
 	 */
 	public static void setTrainFileOut(String trainFileOut) {
-		HandleContsants.trainFileOut = trainFileOut;
+		HandleConstants.trainFileOut = trainFileOut;
 	}
 
 	/**
@@ -237,7 +237,7 @@ public class HandleContsants {
 	 * @param lemmaQuery the lemmaQuery to set
 	 */
 	public static void setLemmaQuery(String lemmaQuery) {
-		HandleContsants.lemmaQuery = lemmaQuery;
+		HandleConstants.lemmaQuery = lemmaQuery;
 	}
 
 	/**
@@ -251,7 +251,7 @@ public class HandleContsants {
 	 * @param formReplace the formReplace to set
 	 */
 	public static void setFormReplace(String formReplace) {
-		HandleContsants.formReplace = formReplace;
+		HandleConstants.formReplace = formReplace;
 	}
 
 	/**
@@ -265,7 +265,7 @@ public class HandleContsants {
 	 * @param posReplace the posReplace to set
 	 */
 	public static void setPosReplace(String posReplace) {
-		HandleContsants.posReplace = posReplace;
+		HandleConstants.posReplace = posReplace;
 	}
 
 	/**
@@ -279,7 +279,7 @@ public class HandleContsants {
 	 * @param dataBase the dataBase to set
 	 */
 	public static void setDataBase(String dataBase) {
-		HandleContsants.dataBase = dataBase;
+		HandleConstants.dataBase = dataBase;
 	}
 
 	/**
@@ -293,7 +293,7 @@ public class HandleContsants {
 	 * @param dbUser the dbUser to set
 	 */
 	public static void setDbUser(String dbUser) {
-		HandleContsants.dbUser = dbUser;
+		HandleConstants.dbUser = dbUser;
 	}
 
 	/**
@@ -307,7 +307,7 @@ public class HandleContsants {
 	 * @param dbPassword the dbPassword to set
 	 */
 	public static void setDbPassword(String dbPassword) {
-		HandleContsants.dbPassword = dbPassword;
+		HandleConstants.dbPassword = dbPassword;
 	}
 
 	/**
@@ -321,7 +321,7 @@ public class HandleContsants {
 	 * @param letterAnalyzed the letterAnalyzed to set
 	 */
 	public static void setLetterAnalyzed(String letterAnalyzed) {
-		HandleContsants.letterAnalyzed = letterAnalyzed;
+		HandleConstants.letterAnalyzed = letterAnalyzed;
 	}
 
 }

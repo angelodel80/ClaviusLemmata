@@ -3,7 +3,7 @@
  */
 package ilc.cnr.it.clavius.corpus;
 
-import ilc.cnr.it.clavius.constants.HandleContsants;
+import ilc.cnr.it.clavius.constants.HandleConstants;
 import ilc.cnr.it.clavius.utils.ClaviusUtils;
 
 import java.io.BufferedWriter;
@@ -38,8 +38,8 @@ public class TreeBankHandler {
 	 * 
 	 */
 	public TreeBankHandler(String fileName) {
-		this.corpusFile = new File(HandleContsants.getContextForTrain()+fileName);
-		this.fileOut = HandleContsants.getTrainFileOut();
+		this.corpusFile = new File(HandleConstants.getContextForTrain()+fileName);
+		this.fileOut = HandleConstants.getTrainFileOut();
 		try{
 			ClaviusUtils.verifyFile(getCorpusFile(), false);
 			initDocument();
@@ -104,7 +104,7 @@ public class TreeBankHandler {
 			XMLOutputter xout = new XMLOutputter();
 			xout.setFormat(Format.getPrettyFormat());
 			//xout.output(getCorpus(), System.out);
-			xout.output(getCorpus(), new FileWriter( HandleContsants.getContextForTrain()+getFileOut()+".xml"));
+			xout.output(getCorpus(), new FileWriter( HandleConstants.getContextForTrain()+getFileOut()+".xml"));
 		}
 		else{
 			System.err.println("The XML print got an error");
@@ -125,7 +125,7 @@ public class TreeBankHandler {
 				
 			}
 			
-			BufferedWriter out = new BufferedWriter(new FileWriter(HandleContsants.getContextForTrain()+getFileOut()+".txt"));  
+			BufferedWriter out = new BufferedWriter(new FileWriter(HandleConstants.getContextForTrain()+getFileOut()+".txt"));  
 	        out.write(sout.toString());  
 	        out.flush();  
 	        out.close();

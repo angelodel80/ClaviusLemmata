@@ -3,7 +3,7 @@
  */
 package ilc.cnr.it.clavius.corpus;
 
-import ilc.cnr.it.clavius.constants.HandleContsants;
+import ilc.cnr.it.clavius.constants.HandleConstants;
 import ilc.cnr.it.clavius.utils.TextUtils;
 
 import java.io.IOException;
@@ -44,7 +44,7 @@ public class TextHandler {
 			Document doc = TextUtils.fileToDocument(filePath);
 			Namespace ns = doc.getRootElement().getNamespace();
 			XPathExpression<Element> sentencesExpression = 
-					XPathFactory.instance().compile(HandleContsants.getXpathForSentences(), Filters.element(), null, Namespace.getNamespace(ns.getPrefix(),ns.getURI()));
+					XPathFactory.instance().compile(HandleConstants.getXpathForSentences(), Filters.element(), null, Namespace.getNamespace("tei",ns.getURI()));
 			List<Element> listOfSentences = sentencesExpression.evaluate(doc);
 
 			if (null != listOfSentences){
@@ -69,7 +69,7 @@ public class TextHandler {
 
 	public String[] getSentence(Element sent){
 		String sentence[] = new String[2];
-		sentence[0] = sent.getAttributeValue(HandleContsants.getAtttributeSentencesName());
+		sentence[0] = sent.getAttributeValue(HandleConstants.getAtttributeSentencesName());
 		sentence[1] = getTextValue(sent);
 		return sentence;
 
@@ -79,7 +79,7 @@ public class TextHandler {
 		StringBuilder sb = new StringBuilder();
 		
 		XPathExpression<Element> sentencesExpression = 
-				XPathFactory.instance().compile(".//lb", Filters.element(), null, Namespace.getNamespace("",""));
+				XPathFactory.instance().compile(".//lb", Filters.element(), null, Namespace.getNamespace("tei",sent.getNamespaceURI()));
 		List<Element> list = sentencesExpression.evaluate(sent);
 		if(list == null || list.size() == 0){
 			//System.out.println("la lista è vuota");
@@ -89,12 +89,12 @@ public class TextHandler {
 			lb.detach();
 		}
 
-		String xpathWord = "./w";
+		String xpathWord = "./tei:w";
 		XPathExpression<Element> wordExpression = 
-				XPathFactory.instance().compile(xpathWord, Filters.element(), null, Namespace.getNamespace("",""));
+				XPathFactory.instance().compile(xpathWord, Filters.element(), null, Namespace.getNamespace("tei",sent.getNamespaceURI()));
 		List<Element> wordlist = wordExpression.evaluate(sent);
 		if(wordlist == null || wordlist.size() == 0){
-			System.err.println("the sentence " + sent.getAttributeValue(HandleContsants.getAtttributeSentencesName()) + " has not tag <w />");
+			System.err.println("the sentence " + sent.getAttributeValue(HandleConstants.getAtttributeSentencesName()) + " has not tag <w />");
 		}
 		for (Element word : wordlist) {
 			word.setText(word.getValue().replaceAll("\\s+", ""));
@@ -104,10 +104,10 @@ public class TextHandler {
 		}
 
 
-		String xpath = HandleContsants.getXpathForText();
+		String xpath = HandleConstants.getXpathForText();
 		//String xpath = "./w/text()";
 		XPathExpression<Text> textExpression = 
-				XPathFactory.instance().compile(xpath, Filters.textOnly(), null, Namespace.getNamespace("",""));
+				XPathFactory.instance().compile(xpath, Filters.textOnly(), null, Namespace.getNamespace("tei", sent.getNamespaceURI()));
 		List<Text> textlist = textExpression.evaluate(sent);
 		if(textlist == null || textlist.size() == 0){
 			//System.out.println("the text list is empty of the sentence: " + sent.getAttributeValue("n"));

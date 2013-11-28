@@ -3,7 +3,7 @@
  */
 package ilc.cnr.it.clavius.utils;
 
-import ilc.cnr.it.clavius.constants.HandleContsants;
+import ilc.cnr.it.clavius.constants.HandleConstants;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -184,7 +184,7 @@ public class ClaviusUtils {
 			System.out.println(doc.getChildText("field"));
 			try {
 			xo.output(new Document().setRootElement(new Element("add").setContent(tmp_doc)), 
-					new FileWriter( HandleContsants.getWorkDir()+ "Letter"+HandleContsants.getLetterRif() +"_an-"+doc.getChildText("field")+".xml"));
+					new FileWriter( HandleConstants.getWorkDir()+ "Letter"+HandleConstants.getLetterRif() +"_an-"+doc.getChildText("field")+".xml"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
