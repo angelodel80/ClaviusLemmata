@@ -138,7 +138,7 @@ public class ClaviusMain {
 		for(int i = 0; i< sents.length; i++){
 			main2.setMsg((String)sents[i]);
 			main2.setSentName(String.format("%s:%s", (String)sKeys[i], main2.getMsg()));
-			System.out.println("sentence:" + main2.getSentName() +" <--> " + main2.getMsg());
+			System.out.println(main2.getSentName());
 //			main2.process(HandleConstants.getModelforHunPos(),"");
 		}
 		//main2.writeOut(HandleContants.getTaggedFile());

@@ -69,10 +69,15 @@ public class TextHandler {
 
 	public String[] getSentence(Element sent){
 		String sentence[] = new String[2];
-		sentence[0] = sent.getAttributeValue(HandleConstants.getAtttributeSentencesName());
+		//sentence[0] = sent.getAttributeValue(HandleConstants.getAtttributeSentencesName());
+		sentence[0] = getCTSforSentence(sent);
 		sentence[1] = getTextValue(sent);
 		return sentence;
 
+	}
+	
+	public String getCTSforSentence(Element sent){
+		return HandleConstants.getCtsUriInvariant() + sent.getParentElement().getParentElement().getParentElement().getAttributeValue("n") + "." + sent.getParentElement().getParentElement().getAttributeValue("n") + "." + sent.getParentElement().getAttributeValue("n") + "." + sent.getAttributeValue("n");
 	}
 
 	private String getTextValue(Element sent){

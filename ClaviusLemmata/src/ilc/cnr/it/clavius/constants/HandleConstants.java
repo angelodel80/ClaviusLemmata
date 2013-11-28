@@ -25,6 +25,8 @@ public class HandleConstants {
 	private static String atttributeSentencesName = "n";
 	private static String xpathForText = "node() | ./tei:w/text() | ./tei:choice/tei:expan/text() | ./tei:code/text() | ./tei:date/text() | ./tei:signatures/text() | ./tei:signatures/tei:choice/tei:expan/text()";
 	
+	private static String ctsUriInvariant = "urn:cts:histReSci:clavius.apug.edApug:";
+	
 	private static String contextForTrain = "/Users/angelodel80/Risorse/sources/";
 	private static String trainFileOut = "corpusForTrain";
 	
@@ -322,6 +324,20 @@ public class HandleConstants {
 	 */
 	public static void setLetterAnalyzed(String letterAnalyzed) {
 		HandleConstants.letterAnalyzed = letterAnalyzed;
+	}
+
+	/**
+	 * @return the ctsUriInvariant
+	 */
+	public static String getCtsUriInvariant() {
+		return ctsUriInvariant;
+	}
+
+	/**
+	 * @param ctsUriInvariant the ctsUriInvariant to set
+	 */
+	public static void setCtsUriInvariant(String ctsUriInvariant) {
+		HandleConstants.ctsUriInvariant = ctsUriInvariant;
 	}
 
 }
