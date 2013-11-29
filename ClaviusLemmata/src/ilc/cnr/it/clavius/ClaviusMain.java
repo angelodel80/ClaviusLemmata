@@ -13,6 +13,8 @@ import ilc.cnr.it.clavius.utils.TextUtils;
 import java.io.IOException;
 import java.io.ObjectInputStream.GetField;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.jdom2.Document;
 import org.jdom2.JDOMException;
@@ -49,13 +51,45 @@ public class ClaviusMain {
 	private void process(String pathModel, String pathBin) {
 		HunposTagger hunPos = new HunposTagger(pathModel, pathBin);
 		String msgTagged = hunPos.tag(this.msg);
+		String tok = "";
+		String pos="";
+		String cts= getSentName().split(":: ")[0];
+		String sentence = getSentName().split(":: ")[1];
+		Pattern p = null;
+		Matcher m = null;
+		StringBuffer tmpBuffer = new StringBuffer();
+		
 		//System.out.println(msgTagged);
 		//hunPos.printPath();
+		//System.err.println("in process:" + msgTagged);
+		String[] lines = msgTagged.split("\n");
 		outBuilder.append(getSentName()+"\n");
-		outBuilder.append(msgTagged);
+		
+		/* for due to manage the cts sub references*/
+		/* tmpBuffer needs for handling words repetitions */
+		for (String line : lines) {
+			if(!"".equals(line)){
+				tok = line.split("\t")[0];
+				pos = line.split("\t")[1];
+				tmpBuffer.append(tok+" ");
+				p = Pattern.compile("\\b"+tok.replaceAll("([\\?\\.])", "\\\\$1")+"\\b"); // |" + tok.replaceAll("([\\?\\.\\*])", "\\\\$1"))
+				m = p.matcher(tmpBuffer);
+				int c = 0;
+				while(m.find())c++;
+				if(c==0){
+					p = Pattern.compile(tok.replaceAll("([\\?\\.])", "\\\\$1"));
+					m = p.matcher(tmpBuffer);
+				}
+				while(m.find())c++;
+				tok = cts.concat(String.format("@%s[%s]", tok,String.valueOf(c)));
+				outBuilder.append(String.format("%s\t%s\n", tok,pos));
+			}	
+		}
+
+		outBuilder.append("\n");
 	}
 
-	
+
 	public void writeOut(String outPath) {
 		try{
 			if(""==outBuilder.toString() | null==outBuilder)
@@ -67,7 +101,7 @@ public class ClaviusMain {
 			io.printStackTrace();
 		}
 	}
-	
+
 	public void manageCorpus(String treeBankName){
 		TreeBankHandler tbh = new TreeBankHandler(treeBankName);
 		//		try {
@@ -108,7 +142,7 @@ public class ClaviusMain {
 		this.msg = msg.replaceAll("\\s+", " ").trim();
 	}
 
-	
+
 	/**
 	 * @return the sentName
 	 */
@@ -126,48 +160,48 @@ public class ClaviusMain {
 	public static void main(String[] args) {
 
 		//ClaviusMain main1 = new ClaviusMain();
-		
+
 		ClaviusMain main2 = new ClaviusMain();
 
 		//main2.manageCorpus("ldt-1.5.xml");
-		
+
 		TextHandler th = new TextHandler();
 		Map<String, String> sentences = th.getSentences(HandleConstants.getXmlTeiFile());
 		Object[] sents = sentences.values().toArray();
 		Object[] sKeys =  sentences.keySet().toArray();
 		for(int i = 0; i< sents.length; i++){
 			main2.setMsg((String)sents[i]);
-			main2.setSentName(String.format("%s:%s", (String)sKeys[i], main2.getMsg()));
+			main2.setSentName(String.format("%s:: %s", (String)sKeys[i], main2.getMsg()));
 			System.out.println(main2.getSentName());
-//			main2.process(HandleConstants.getModelforHunPos(),"");
+			main2.process(HandleConstants.getModelforHunPos(),HandleConstants.getPathToHunPos());
 		}
-		//main2.writeOut(HandleContants.getTaggedFile());
+		main2.writeOut(HandleConstants.getTaggedFile());
 		//ParseToken.init(HandleContants.getTaggedFile(), HandleConstants.getTaggedFile());
 		//ParseToken.run();
-//		try {
-//			Document xmlSentences = TextUtils.TabToXml(HandleConstants.getTabFileAnalyzed(), true);
-//			ClaviusUtils.makeSentenceXML(xmlSentences);
-//		} catch (JDOMException e) {
-			// TODO Auto-generated catch block
-//			e.getMessage();
-//			e.printStackTrace();
-//		} catch (IOException e) {
-			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-		
-		
-		
-		
-//		main1.setMsg("fidelis dulcem amat virgo poetam");
-//		main1.setSentName("phrase_1");
-//		main1.process("testFirst.model", "");
-//		//System.out.println(main1.outBuilder.toString());
-//		main1.setMsg("virgo fidelis dulcem poetam amat");
-//		main1.setSentName("phrase_2");
-//		main1.process("testFirst.model", "");
-//		System.out.println(main1.outBuilder.toString());
+		//	try {
+		//Document xmlSentences = TextUtils.TabToXml(HandleConstants.getTabFileAnalyzed(), true);
+		//ClaviusUtils.makeSentenceXML(xmlSentences);
+		//} catch (JDOMException e) {
+		// TODO Auto-generated catch block
+		//	e.getMessage();
+		//	e.printStackTrace();
+		//} catch (IOException e) {
+		// TODO Auto-generated catch block
+		//	e.printStackTrace();
+		//}
+
+
+
+
+		//		main1.setMsg("fidelis dulcem amat virgo poetam");
+		//		main1.setSentName("phrase_1");
+		//		main1.process("testFirst.model", "");
+		//		//System.out.println(main1.outBuilder.toString());
+		//		main1.setMsg("virgo fidelis dulcem poetam amat");
+		//		main1.setSentName("phrase_2");
+		//		main1.process("testFirst.model", "");
+		//		System.out.println(main1.outBuilder.toString());
 	}
 
-	
+
 }

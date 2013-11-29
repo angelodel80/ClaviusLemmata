@@ -36,13 +36,14 @@ public class HunposTagger {
 	 */
 	public HunposTagger(String pathToModel, String pathToBin) {
 		init(pathToModel,pathToBin);
+		
 	}
 
 	/**
 	 * 
 	 */
 	public HunposTagger() {
-		//init(this.pathToModel, this.pathToBin);
+		init(this.pathToModel, this.pathToBin);
 		setPathToBin(HandleConstants.getPathToHunPos());
 	}
 

@@ -11,7 +11,7 @@ public class HandleConstants {
 	
 	private static String xmlTeiFile = "/Users/angelodel80/Risorse/sources/clavius/calviusTraduzioni/ClaviusResources/147/147_APUG_530_cc.129-130.xml";
 	private static String modelforHunPos = "testFirst.model";
-	private static String tabFileAnalyzed = "/Users/angelodel80/Risorse/sources/clavius/out-tokensLemmatized-11092013.txt";
+	private static String tabFileAnalyzed = "/Users/angelodel80/Risorse/sources/clavius/out-tokensLemmatized-30112013.txt";
 	private static String taggedFile = "/Users/angelodel80/Risorse/sources/clavius/TaggedFile.txt";
 	private static String workDir = "/Users/angelodel80/Risorse/sources/clavius/";
 	private static String letterRif = "147";
