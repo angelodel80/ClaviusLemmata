@@ -72,7 +72,7 @@ public class ClaviusMain {
 				tok = line.split("\t")[0];
 				pos = line.split("\t")[1];
 				tmpBuffer.append(tok+" ");
-				p = Pattern.compile("\\b"+tok.replaceAll("([\\?\\.])", "\\\\$1")+"\\b"); // |" + tok.replaceAll("([\\?\\.\\*])", "\\\\$1"))
+				p = Pattern.compile("\\b"+tok.replaceAll("([\\?\\.])", "\\\\$1")+"\\b");
 				m = p.matcher(tmpBuffer);
 				int c = 0;
 				while(m.find())c++;
@@ -166,29 +166,29 @@ public class ClaviusMain {
 		//main2.manageCorpus("ldt-1.5.xml");
 
 		TextHandler th = new TextHandler();
-		Map<String, String> sentences = th.getSentences(HandleConstants.getXmlTeiFile());
-		Object[] sents = sentences.values().toArray();
-		Object[] sKeys =  sentences.keySet().toArray();
-		for(int i = 0; i< sents.length; i++){
-			main2.setMsg((String)sents[i]);
-			main2.setSentName(String.format("%s:: %s", (String)sKeys[i], main2.getMsg()));
-			System.out.println(main2.getSentName());
-			main2.process(HandleConstants.getModelforHunPos(),HandleConstants.getPathToHunPos());
-		}
-		main2.writeOut(HandleConstants.getTaggedFile());
+//		Map<String, String> sentences = th.getSentences(HandleConstants.getXmlTeiFile());
+//		Object[] sents = sentences.values().toArray();
+//		Object[] sKeys =  sentences.keySet().toArray();
+//		for(int i = 0; i< sents.length; i++){
+//			main2.setMsg((String)sents[i]);
+//			main2.setSentName(String.format("%s:: %s", (String)sKeys[i], main2.getMsg()));
+//			System.out.println(main2.getSentName());
+//			main2.process(HandleConstants.getModelforHunPos(),HandleConstants.getPathToHunPos());
+//		}
+//		main2.writeOut(HandleConstants.getTaggedFile());
 		//ParseToken.init(HandleContants.getTaggedFile(), HandleConstants.getTaggedFile());
 		//ParseToken.run();
-		//	try {
-		//Document xmlSentences = TextUtils.TabToXml(HandleConstants.getTabFileAnalyzed(), true);
-		//ClaviusUtils.makeSentenceXML(xmlSentences);
-		//} catch (JDOMException e) {
+			try {
+		Document xmlSentences = TextUtils.TabToXml(HandleConstants.getTabFileAnalyzed(), true);
+		ClaviusUtils.makeSentenceXML(xmlSentences);
+		} catch (JDOMException e) {
 		// TODO Auto-generated catch block
-		//	e.getMessage();
-		//	e.printStackTrace();
-		//} catch (IOException e) {
+			e.getMessage();
+			e.printStackTrace();
+		} catch (IOException e) {
 		// TODO Auto-generated catch block
-		//	e.printStackTrace();
-		//}
+			e.printStackTrace();
+		}
 
 
 
