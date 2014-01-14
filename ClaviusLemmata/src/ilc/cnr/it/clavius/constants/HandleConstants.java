@@ -10,11 +10,12 @@ package ilc.cnr.it.clavius.constants;
 public class HandleConstants {
 	
 	private static String xmlTeiFile = "/Users/angelodel80/Risorse/sources/clavius/calviusTraduzioni/ClaviusResources/147/147_APUG_530_cc.129-130.xml";
+			//"/Users/angelodel80/Risorse/sources/clavius/test/TestLemmata.xml"; 
 	private static String modelforHunPos = "testFirst.model";
-	private static String tabFileAnalyzed = "/Users/angelodel80/Risorse/sources/clavius/out-tokensLemmatized-30112013.txt";
-	private static String taggedFile = "/Users/angelodel80/Risorse/sources/clavius/TaggedFile.txt";
-	private static String workDir = "/Users/angelodel80/Risorse/sources/clavius/";
-	private static String letterRif = "147";
+	private static String tabFileAnalyzed = "/Users/angelodel80/Risorse/sources/clavius/calviusTraduzioni/ClaviusResources/147/147-out-tokensLemmatized.txt";
+	private static String taggedFile = "/Users/angelodel80/Risorse/sources/clavius/test/TaggedFile.txt";
+	private static String workDir = "/Users/angelodel80/Risorse/sources/clavius/analysisWork/";
+	private static String letterRif = "147"; //"Test01";
 	
 	private static String letterAnalyzed = "/Letter"+HandleConstants.letterRif+"_sentences_Analyzed";
 	

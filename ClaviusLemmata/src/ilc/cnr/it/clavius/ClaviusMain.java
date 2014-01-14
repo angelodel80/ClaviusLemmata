@@ -27,17 +27,19 @@ public class ClaviusMain {
 
 	private String msg = "";
 	private String sentName = "";
-	private StringBuilder outBuilder = new StringBuilder();
+	private StringBuilder outBuilder = null;
 
 	/**
 	 * 
 	 */
 	public ClaviusMain() {
 		this.msg = "this is the default message!";
+		outBuilder = new StringBuilder();
 	}
 
 	public ClaviusMain(String msg){
 		this.msg = msg;
+		outBuilder = new StringBuilder();
 	}
 
 	public void printMsg(){
@@ -58,13 +60,13 @@ public class ClaviusMain {
 		Pattern p = null;
 		Matcher m = null;
 		StringBuffer tmpBuffer = new StringBuffer();
-		
+
 		//System.out.println(msgTagged);
 		//hunPos.printPath();
 		//System.err.println("in process:" + msgTagged);
 		String[] lines = msgTagged.split("\n");
 		outBuilder.append(getSentName()+"\n");
-		
+
 		/* for due to manage the cts sub references*/
 		/* tmpBuffer needs for handling words repetitions */
 		for (String line : lines) {
@@ -72,12 +74,12 @@ public class ClaviusMain {
 				tok = line.split("\t")[0];
 				pos = line.split("\t")[1];
 				tmpBuffer.append(tok+" ");
-				p = Pattern.compile("\\b"+tok.replaceAll("([\\?\\.])", "\\\\$1")+"\\b");
+				p = Pattern.compile("\\b"+tok.replaceAll("([\\?\\.\\[\\]])", "\\\\$1")+"\\b");
 				m = p.matcher(tmpBuffer);
 				int c = 0;
 				while(m.find())c++;
 				if(c==0){
-					p = Pattern.compile(tok.replaceAll("([\\?\\.])", "\\\\$1"));
+					p = Pattern.compile(tok.replaceAll("([\\?\\.\\[\\]])", "\\\\$1"));
 					m = p.matcher(tmpBuffer);
 				}
 				while(m.find())c++;
@@ -166,35 +168,45 @@ public class ClaviusMain {
 		//main2.manageCorpus("ldt-1.5.xml");
 
 		TextHandler th = new TextHandler();
-//		Map<String, String> sentences = th.getSentences(HandleConstants.getXmlTeiFile());
-//		Object[] sents = sentences.values().toArray();
-//		Object[] sKeys =  sentences.keySet().toArray();
-//		for(int i = 0; i< sents.length; i++){
-//			main2.setMsg((String)sents[i]);
-//			main2.setSentName(String.format("%s:: %s", (String)sKeys[i], main2.getMsg()));
-//			System.out.println(main2.getSentName());
-//			main2.process(HandleConstants.getModelforHunPos(),HandleConstants.getPathToHunPos());
-//		}
-//		main2.writeOut(HandleConstants.getTaggedFile());
+
+		/* estrazione delle sentece da documenti TEI */
+
+		//		Map<String, String> sentences = th.getSentences(HandleConstants.getXmlTeiFile());
+		//		Object[] sents = sentences.values().toArray();
+		//		Object[] sKeys =  sentences.keySet().toArray();
+		//		for(int i = 0; i< sents.length; i++){
+		//			main2.setMsg((String)sents[i]);
+		//			main2.setSentName(String.format("%s:: %s", (String)sKeys[i], main2.getMsg()));
+		////			System.out.println(main2.getSentName());
+		//			main2.process(HandleConstants.getModelforHunPos(),HandleConstants.getPathToHunPos());
+		//		}
+		//		main2.writeOut(HandleConstants.getTaggedFile());
+
+		/* processo per la ricerca del lemma nella banca dati formario-lemmario */
+
 		//ParseToken.init(HandleContants.getTaggedFile(), HandleConstants.getTaggedFile());
 		//ParseToken.run();
-			try {
-		Document xmlSentences = TextUtils.TabToXml(HandleConstants.getTabFileAnalyzed(), true);
-		ClaviusUtils.makeSentenceXML(xmlSentences);
+
+		/*Processo per la costruzione del file XML*/
+		try {
+			Document xmlSentences = TextUtils.TabToXml(HandleConstants.getTabFileAnalyzed(), true);
+			ClaviusUtils.makeSentenceXML(xmlSentences);
+			// TODO build XML for integration purposes (Tokens and Linguistical_Analysis)
+			ClaviusUtils.makeIntegrationXMLforAnalysis(xmlSentences);
 		} catch (JDOMException e) {
-		// TODO Auto-generated catch block
+			// TODO Auto-generated catch block
 			e.getMessage();
 			e.printStackTrace();
 		} catch (IOException e) {
-		// TODO Auto-generated catch block
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-
-
+		
+		
 
 		//		main1.setMsg("fidelis dulcem amat virgo poetam");
 		//		main1.setSentName("phrase_1");
+		/* processo per la costruzione del training set */
 		//		main1.process("testFirst.model", "");
 		//		//System.out.println(main1.outBuilder.toString());
 		//		main1.setMsg("virgo fidelis dulcem poetam amat");
