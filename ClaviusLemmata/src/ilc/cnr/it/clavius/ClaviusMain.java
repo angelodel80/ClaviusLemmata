@@ -11,6 +11,7 @@ import ilc.cnr.it.clavius.lemmata.ParseXMLAnalized;
 import ilc.cnr.it.clavius.utils.ClaviusUtils;
 import ilc.cnr.it.clavius.utils.TextUtils;
 import it.cnr.ilc.angelo.lemlat.LemLatQuery;
+import it.cnr.ilc.angelo.lemlat.query.LemLatBaseSearch;
 
 import java.io.IOException;
 import java.io.ObjectInputStream.GetField;
@@ -239,13 +240,18 @@ public class ClaviusMain {
 				
 				/* Processo per la query al LemLat */
 				ParseXMLAnalized par = new ParseXMLAnalized("C:/tmp/MP/VERG/VERG/Letter1_an.xml");
+				StringBuilder lemLatBuider = new StringBuilder();
 				try {
 					List<String> tokens = par.extractTokens();
 					for (String token : tokens) {
-						System.out.println(token);
+						//System.out.println(token);
+						lemLatBuider.append("\nTOKEN URI: " + token+"\n");
 						String[] argLemLat = new String[1];
-						argLemLat[0] = token.toLowerCase();
+						argLemLat[0] = token.replaceAll("(.+)@+?", "").replaceAll("\\[\\d\\]", "").toLowerCase();
+						lemLatBuider.append("TOKEN STRING: " + argLemLat[0]+"\n");
 						LemLatQuery.main(argLemLat);
+						lemLatBuider.append(LemLatQuery.analysisStringBuider() + "\n");
+						TextUtils.StringToFile(lemLatBuider, "C:/tmp/MP/VERG/VERG/LemLat_an.txt");
 					}
 				} catch (JDOMException e) {
 					// TODO Auto-generated catch block

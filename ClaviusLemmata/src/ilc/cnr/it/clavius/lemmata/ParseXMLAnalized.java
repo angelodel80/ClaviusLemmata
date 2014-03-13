@@ -41,7 +41,7 @@ public class ParseXMLAnalized {
 		IteratorIterable<Element> tokensIterator = root.getDescendants(new ElementFilter("token"));
 		tokens = new ArrayList<String>(); 
 		for (Element element : tokensIterator) {
-			tokens.add(element.getAttributeValue("form"));
+			tokens.add(element.getAttributeValue("uri"));
 		}
 		
 		return tokens;
