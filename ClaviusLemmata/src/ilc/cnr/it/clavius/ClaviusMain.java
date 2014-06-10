@@ -6,12 +6,13 @@ package ilc.cnr.it.clavius;
 import ilc.cnr.it.clavius.constants.HandleConstants;
 import ilc.cnr.it.clavius.corpus.TextHandler;
 import ilc.cnr.it.clavius.corpus.TreeBankHandler;
-import ilc.cnr.it.clavius.lemmata.ParseToken;
+
 import ilc.cnr.it.clavius.lemmata.ParseXMLAnalized;
 import ilc.cnr.it.clavius.utils.ClaviusUtils;
 import ilc.cnr.it.clavius.utils.TextUtils;
 import it.cnr.ilc.angelo.lemlat.LemLatQuery;
 import it.cnr.ilc.angelo.lemlat.query.LemLatBaseSearch;
+import it.cnr.ilc.angelo.main.ParseToken;
 
 import java.io.IOException;
 import java.io.ObjectInputStream.GetField;
@@ -79,12 +80,12 @@ public class ClaviusMain {
 				tok = line.split("\t")[0];
 				pos = line.split("\t")[1];
 				tmpBuffer.append(tok+" ");
-				p = Pattern.compile("\\b"+tok.replaceAll("([\\?\\.\\[\\]])", "\\\\$1")+"\\b");
+				p = Pattern.compile("\\b"+tok.replaceAll("([\\?\\.\\[\\]\\\\\\)\\(])", "\\\\$1")+"\\b");
 				m = p.matcher(tmpBuffer);
 				int c = 0;
 				while(m.find())c++;
 				if(c==0){
-					p = Pattern.compile(tok.replaceAll("([\\?\\.\\[\\]])", "\\\\$1"));
+					p = Pattern.compile(tok.replaceAll("([\\?\\.\\[\\]\\\\\\)\\(])", "\\\\$1"));
 					m = p.matcher(tmpBuffer);
 				}
 				while(m.find())c++;
@@ -188,84 +189,91 @@ public class ClaviusMain {
 
 	public static void main(String[] args) {
 
-//		//ClaviusMain main1 = new ClaviusMain();
-//
-//		ClaviusMain main2 = new ClaviusMain();
-//
-//		//main2.manageCorpus("ldt-1.5.xml");
-//
-//		TextHandler th = new TextHandler();
-//
-//		/* estrazione delle sentece da documenti TEI */
-//
-//		Map<String, String> sentences = th.getSentences(HandleConstants.getXmlTeiFile());
-//
-//		// Funzionalità per la riscrittura del testo in fullText
-//		main2.writeFullText(sentences, HandleConstants.getFullTextFile());
-//
-//		// Funzionalità per il PoS Tagging
-//		Object[] sents = sentences.values().toArray();
-//		Object[] sKeys =  sentences.keySet().toArray();
-//		for(int i = 0; i< sents.length; i++){
-//			main2.setMsg((String)sents[i]);
-//			main2.setSentName(String.format("%s:: %s", (String)sKeys[i], main2.getMsg()));
-//			System.out.println(main2.getSentName());
-//			//			//FIXME costruire i token prima di processare le sentences con HUNPOS!!!
-//			main2.process(HandleConstants.getModelforHunPos(), HandleConstants.getPathToHunPos());
-//		}
-//		main2.writeOut(HandleConstants.getTaggedFile()); // Scrivo il contenuto del posTagging
-//
-//		/* processo per la ricerca del lemma nella banca dati formario-lemmario */
-//
-////		ParseToken.init(HandleConstants.getTaggedFile(), HandleConstants.getTabFileAnalyzed());
-////		ParseToken.run();
-//
-//		/*Processo per la costruzione del file XML*/
-//
-//				try {
-//					Document xmlSentences = TextUtils.TabToXml(HandleConstants.getTabFileAnalyzed(), true);
-//					ClaviusUtils.makeSentenceXML(xmlSentences);
-//					// TODO build XML for integration purposes (Tokens and Linguistical_Analysis)
-//					ClaviusUtils.makeIntegrationXMLforAnalysis(xmlSentences);
-//				} catch (JDOMException e) {
-//					// TODO Auto-generated catch block
-//					e.getMessage();
-//					e.printStackTrace();
-//				} catch (IOException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//
-
+				//ClaviusMain main1 = new ClaviusMain();
+		
+				ClaviusMain main2 = new ClaviusMain();
+		
+				//main2.manageCorpus("ldt-1.5.xml");
+		
+				TextHandler th = new TextHandler();
+		
+				/* estrazione delle sentece da documenti TEI */
+		
+				Map<String, String> sentences = th.getSentences(HandleConstants.getXmlTeiFile());
+		
+				// Funzionalità per la riscrittura del testo in fullText
+				main2.writeFullText(sentences, HandleConstants.getFullTextFile());
+		
+				// Funzionalità per il PoS Tagging
+				Object[] sents = sentences.values().toArray();
+				Object[] sKeys =  sentences.keySet().toArray();
+		
 				
-				/* Processo per la query al LemLat */
-				ParseXMLAnalized par = new ParseXMLAnalized("C:/tmp/MP/VERG/VERG/Letter1_an.xml");
-				StringBuilder lemLatBuider = new StringBuilder();
-				try {
-					List<String> tokens = par.extractTokens();
-					for (String token : tokens) {
-						//System.out.println(token);
-						lemLatBuider.append("\nTOKEN URI: " + token+"\n");
-						String[] argLemLat = new String[1];
-						argLemLat[0] = token.replaceAll("(.+)@+?", "").replaceAll("\\[\\d\\]", "").toLowerCase();
-						lemLatBuider.append("TOKEN STRING: " + argLemLat[0]+"\n");
-						LemLatQuery.main(argLemLat);
-						lemLatBuider.append(LemLatQuery.analysisStringBuider() + "\n");
-						TextUtils.StringToFile(lemLatBuider, "C:/tmp/MP/VERG/VERG/LemLat_an.txt");
-					}
-				} catch (JDOMException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				for(int i = 0; i< sents.length; i++){
+					main2.setMsg((String)sents[i]);
+					main2.setSentName(String.format("%s:: %s", (String)sKeys[i], main2.getMsg()));
+					System.out.println(main2.getSentName());
+					//			//FIXME costruire i token prima di processare le sentences con HUNPOS!!!
+					//main2.process(HandleConstants.getModelforHunPos(), HandleConstants.getPathToHunPos());
 				}
+				//main2.writeOut(HandleConstants.getTaggedFile()); // Scrivo il contenuto del posTagging
+		
+				/* processo per la ricerca del lemma nella banca dati formario-lemmario */
+		
+				String[] ParseTokenArgs = {HandleConstants.getTaggedFile(), HandleConstants.getTabFileAnalyzed()};
+				ParseToken.main(ParseTokenArgs);
+//				//ParseToken.init(HandleConstants.getTaggedFile(), HandleConstants.getTabFileAnalyzed());
+//				//ParseToken.run();
+//		
+//				/*Processo per la costruzione del file XML*/
+//		
+//						try {
+//							Document xmlSentences = TextUtils.TabToXml(HandleConstants.getTabFileAnalyzed(), true);
+//							ClaviusUtils.makeSentenceXML(xmlSentences);
+//							// TODO build XML for integration purposes (Tokens and Linguistical_Analysis)
+//							ClaviusUtils.makeIntegrationXMLforAnalysis(xmlSentences);
+//						} catch (JDOMException e) {
+//							// TODO Auto-generated catch block
+//							e.getMessage();
+//							e.printStackTrace();
+//						} catch (IOException e) {
+//							// TODO Auto-generated catch block
+//							e.printStackTrace();
+//						}
+		
 
-				
+
+		/* Processo per la query al LemLat */
+
+//		ParseXMLAnalized par = new ParseXMLAnalized("C:/tmp/MP/VERG/VERG/Test1_an.xml");
+//		StringBuilder lemLatBuider = new StringBuilder();
+//		try {
+//			List<String> tokens = par.extractTokens();
+//			for (String token : tokens) {
+//				//System.out.println(token);
+//				lemLatBuider.append("TOKEN URI: " + token);
+//				String[] argLemLat = new String[1];
+//				argLemLat[0] = token.replaceAll("(.+)@+?", "").replaceAll("\\[\\d\\]", "").toLowerCase();
+//				lemLatBuider.append("\n\tTOKEN STRING: " + argLemLat[0]+"\n");
+//				LemLatQuery.main(argLemLat);
+//				lemLatBuider.append(LemLatQuery.analysisStringBuider() + "\n");
+//				//lemLatBuider.append("\t\tANALYSIS" + "\n");
+//				lemLatBuider.append("\n");
+//				TextUtils.StringToFile(lemLatBuider, "C:/tmp/MP/VERG/VERG/LemLat_17032014_an.txt");
+//			}
+//		} catch (JDOMException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+
+
 
 		//		main1.setMsg("fidelis dulcem amat virgo poetam");
 		//		main1.setSentName("phrase_1");
-				
+
 		/* processo per la costruzione del training set */
 		//		main1.process("testFirst.model", "");
 		//		//System.out.println(main1.outBuilder.toString());

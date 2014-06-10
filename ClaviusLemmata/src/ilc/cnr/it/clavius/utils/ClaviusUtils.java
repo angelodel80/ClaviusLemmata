@@ -190,7 +190,8 @@ public class ClaviusUtils {
 		fields.get(1).getAttribute("name").setValue("sentence_txt");
 		fields.get(1).setText(line.substring(line.indexOf(":: ")+3));
 		fields.get(2).getAttribute("name").setValue("image_url");
-		fields.get(2).setText(HandleConstants.getLetterRif()+"-"+line.substring(line.indexOf("s_"), line.indexOf(":: "))+".png");
+		//fields.get(2).setText(HandleConstants.getLetterRif()+"-"+line.substring(line.indexOf("s_"), line.indexOf(":: "))+".png"); OK for Clavius
+		fields.get(2).setText(HandleConstants.getLetterRif()+"-"+"xyz.png"); // OK for Virgilius
 		fields.get(3).getAttribute("name").setValue("sentence_id");
 		fields.get(3).setText(line.substring(0, line.indexOf(":: ")));
 		fields.get(4).getAttribute("name").setValue("image_id");

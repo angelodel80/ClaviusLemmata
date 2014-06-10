@@ -9,17 +9,29 @@ package ilc.cnr.it.clavius.constants;
  */
 public class HandleConstants {
 	
-	private final static String xmlTeiFile = "C:/tmp/MP/VERG/VERG/test.xml";
+	private final static String letterRif = "6-336";
+	private final static String TeiFile = "AP_6-336.xml";
+	private final static String workDir = "C:/tmp/MP/TEO/";
+			//"C:/tmp/Clavius/TEI-MarkUp/08042014/"+letterRif+"/";
+			//"C:/tmp/Clavius/TEI-MarkUp/08042014/136/";
+			// "C:/tmp/MP/1/";
+	
+	//"136_APUG_530_cc.138-139.xml";"aeneis_1.xml";
+	
+	private final static String xmlTeiFile = workDir+TeiFile;
+			//"C:/tmp/MP/VERG/VERG/test.xml"; 
 			//"/Users/angelodel80/Risorse/sources/clavius/calviusTraduzioni/ClaviusResources/147/147_APUG_530_cc.129-130.xml";
 			//"/Users/angelodel80/Risorse/sources/clavius/test/TestLemmata.xml"; 
-	private final static String FullTextFile = "C:/tmp/MP/VERG/VERG/fullText.txt";
+	private final static String FullTextFile = workDir+"fullText.txt";
 	
 	private final static String modelforHunPos = "testFirst.model";
-	private final static String tabFileAnalyzed = "C:/tmp/MP/VERG/VERG/out-tokens_TestLemmata.txt";
-	private final static String taggedFile = "C:/tmp/MP/VERG/VERG/testOutput.txt";
+	private final static String tabFileAnalyzed = workDir+"out-tokens_Lemmata.txt";
+			//"C:/tmp/MP/VERG/VERG/out-tokens_TestLemmata.txt";
+	private final static String taggedFile = workDir+"taggedFile.txt";
+			//"C:/tmp/MP/VERG/VERG/testOutput.txt";
 			//"/Users/angelodel80/Risorse/sources/clavius/test/TaggedFile.txt";
-	private final static String workDir = "C:/tmp/MP/VERG/VERG/";
-	private final static String letterRif = "1"; //"Test01";
+	
+	
 	
 	private final static String letterAnalyzed = "/Letter"+HandleConstants.letterRif+"_sentences_Analyzed";
 	
@@ -29,18 +41,23 @@ public class HandleConstants {
 	private final static String pathToHunPos = "C:/opt/hunpos-1.0-win/hunpos-1.0-win/hunpos-tag.exe";
 	private final static String pathToHunPosModel = "C:/opt/hunpos-1.0-win/hunpos-1.0-win/";
 	
-	private final static String xpathForSentences = "/tei:TEI/tei:text/tei:body/tei:div/tei:div/tei:ab/tei:s";
+	private final static String xpathForSentences = "/tei:TEI/tei:text/tei:group/tei:text/tei:body/tei:div1/tei:p/tei:s";
+			//"/tei:TEI/tei:text/tei:body/tei:div/tei:div/tei:ab/tei:s";
+			//"/tei:TEI/tei:text/tei:body/tei:div/tei:div/tei:ab/tei:s"; "tei:TEI/tei:text/tei:body/tei:div/tei:s"; // for virgilio
 	private final static String atttributeSentencesName = "n";
-	private final static String xpathForText = "node() | ./tei:w/text() | ./tei:choice/tei:expan/text() | ./tei:code/text() | ./tei:date/text() | ./tei:signatures/text() | ./tei:signatures/tei:choice/tei:expan/text()";
+	private final static String xpathForText = "node() | ./tei:w/text() | ./tei:sic/text() | ./tei:choice/tei:expan/text() | ./tei:date/tei:choice/tei:expan/text() |./tei:date/tei:hi/text() | ./tei:code/text() | ./tei:date/text() | ./tei:signatures/text() | ./tei:signatures/tei:choice/tei:expan/text() | ./tei:choice/tei:corr/text()";
 	
-	private final static String ctsUriInvariant = "urn:cts:virgilio:"; 
+	private final static String ctsUriInvariant = "urn:cts:greekLit:tlg0005.tlg002.perseus-grc1:";
 			//"urn:cts:histReSci:clavius.apug.edApug:";
+			//"urn:cts:latinLit:phi0690.phi003.mqdq-lat01:"; 
+			
 	
 	private final static String contextForTrain = "/Users/angelodel80/Risorse/sources/";
 	private final static String trainFileOut = "corpusForTrain";
 	
 	
-	private final static String lemmaQuery = "SELECT lemma_text, morph_code FROM hib_parses as f LEFT JOIN hib_lemmas as l on f.lemma_id = l.lemma_id WHERE f.bare_form = \"{[?form?]}\" and f.morph_code like \"{[?pos?]}%\"" ;
+	private final static String lemmaQuery = "SELECT lemma_text, morph_code FROM hib_parses as f LEFT JOIN hib_lemmas as l on f.lemma_id = l.lemma_id WHERE f.form = \"{[?form?]}\" and f.morph_code like \"{[?pos?]}%\"" ;
+			//"SELECT lemma_text, morph_code FROM hib_parses as f LEFT JOIN hib_lemmas as l on f.lemma_id = l.lemma_id WHERE f.bare_form = \"{[?form?]}\" and f.morph_code like \"{[?pos?]}%\"" ;
 	private final static String formReplace = "\\{\\[\\?form\\?\\]\\}";
 	private final static String posReplace = "\\{\\[\\?pos\\?\\]\\}";
 	private final static String dataBase = "jdbc:mysql://localhost:3306/perseus";
@@ -304,6 +321,13 @@ public class HandleConstants {
 	 */
 	public static String getFullTextFile() {
 		return FullTextFile;
+	}
+
+	/**
+	 * @return the teifile
+	 */
+	public static String getTeifile() {
+		return TeiFile;
 	}
 
 	/**
