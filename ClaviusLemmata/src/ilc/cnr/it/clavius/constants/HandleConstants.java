@@ -10,7 +10,7 @@ package ilc.cnr.it.clavius.constants;
 public class HandleConstants {
 	
 	private final static String letterRif = "147";
-	private final static String TeiFile = "147_APUG_530_cc.129-130.xml";
+	private final static String TeiFile = "147-transcription.xml";
 	private final static String workDir = "C:/tmp/Clavius/TEI-MarkUp/08042014/"+letterRif+"/";
 			//"C:/tmp/Clavius/TEI-MarkUp/08042014/"+letterRif+"/";
 			//"C:/tmp/Clavius/TEI-MarkUp/08042014/136/";

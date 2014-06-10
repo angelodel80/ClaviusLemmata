@@ -8,23 +8,21 @@ import ilc.cnr.it.clavius.corpus.TextHandler;
 import ilc.cnr.it.clavius.corpus.TreeBankHandler;
 
 import ilc.cnr.it.clavius.lemmata.ParseToken;
-import ilc.cnr.it.clavius.lemmata.ParseXMLAnalized;
+
 import ilc.cnr.it.clavius.utils.ClaviusUtils;
+import ilc.cnr.it.clavius.utils.SentencesHandler;
 import ilc.cnr.it.clavius.utils.TextUtils;
-import it.cnr.ilc.angelo.lemlat.LemLatQuery;
-import it.cnr.ilc.angelo.lemlat.query.LemLatBaseSearch;
-//import it.cnr.ilc.angelo.main.ParseToken;
+
 
 import java.io.IOException;
-import java.io.ObjectInputStream.GetField;
-import java.util.List;
+
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.jdom2.Document;
 import org.jdom2.JDOMException;
-import org.jdom2.Parent;
+
 
 /**
  * @author angelodel80
@@ -190,84 +188,78 @@ public class ClaviusMain {
 
 	public static void main(String[] args) {
 
-				//ClaviusMain main1 = new ClaviusMain();
+		ClaviusMain lemmatizationRun = new ClaviusMain();
+		TextHandler th = new TextHandler();
+
+		/* estrazione delle sentece da documenti TEI */
+		Map<String, String> sentences = th.getSentences(HandleConstants.getXmlTeiFile());
+
 		
-				ClaviusMain lemmatizationRun = new ClaviusMain();
+		/* Funzionalità per la scrittura del testo in fullText */
+		lemmatizationRun.writeFullText(sentences, HandleConstants.getFullTextFile());
+
+
+		/* Funzionalità per il PoS Tagging */
+		Object[] sents = sentences.values().toArray();
+		Object[] sKeys =  sentences.keySet().toArray();
+
+		for(int i = 0; i< sents.length; i++){
+			lemmatizationRun.setMsg((String)sents[i]);
+			lemmatizationRun.setSentName(String.format("%s:: %s", (String)sKeys[i], lemmatizationRun.getMsg()));
+			System.out.println(lemmatizationRun.getSentName());
+			lemmatizationRun.process(HandleConstants.getModelforHunPos(), HandleConstants.getPathToHunPos());
+		}
 		
-				//main2.manageCorpus("ldt-1.5.xml");
+		lemmatizationRun.writeOut(HandleConstants.getTaggedFile()); // Scrivo il contenuto del posTagging
+
 		
-				TextHandler th = new TextHandler();
+		/* processo per la ricerca del lemma nella banca dati formario-lemmario */
+		ParseToken.main(new String[] {HandleConstants.getTaggedFile(), HandleConstants.getTabFileAnalyzed()});
 		
-				/* estrazione delle sentece da documenti TEI */
-		
-				Map<String, String> sentences = th.getSentences(HandleConstants.getXmlTeiFile());
-		
-				// Funzionalità per la riscrittura del testo in fullText
-				lemmatizationRun.writeFullText(sentences, HandleConstants.getFullTextFile());
-		
-				// Funzionalità per il PoS Tagging
-				Object[] sents = sentences.values().toArray();
-				Object[] sKeys =  sentences.keySet().toArray();
-		
-				
-				for(int i = 0; i< sents.length; i++){
-					lemmatizationRun.setMsg((String)sents[i]);
-					lemmatizationRun.setSentName(String.format("%s:: %s", (String)sKeys[i], lemmatizationRun.getMsg()));
-					System.out.println(lemmatizationRun.getSentName());
-					//			//FIXME costruire i token prima di processare le sentences con HUNPOS!!!
-					lemmatizationRun.process(HandleConstants.getModelforHunPos(), HandleConstants.getPathToHunPos());
-				}
-				lemmatizationRun.writeOut(HandleConstants.getTaggedFile()); // Scrivo il contenuto del posTagging
-		
-				/* processo per la ricerca del lemma nella banca dati formario-lemmario */
-		
-				String[] ParseTokenArgs = {HandleConstants.getTaggedFile(), HandleConstants.getTabFileAnalyzed()};
-				ParseToken.main(ParseTokenArgs);
-	
-				/*Processo per la costruzione del file XML*/
-		
-//						try {
-//							Document xmlSentences = TextUtils.TabToXml(HandleConstants.getTabFileAnalyzed(), true);
-//							ClaviusUtils.makeSentenceXML(xmlSentences);
-//							// TODO build XML for integration purposes (Tokens and Linguistical_Analysis)
-//							ClaviusUtils.makeIntegrationXMLforAnalysis(xmlSentences);
-//						} catch (JDOMException e) {
-//							// TODO Auto-generated catch block
-//							e.getMessage();
-//							e.printStackTrace();
-//						} catch (IOException e) {
-//							// TODO Auto-generated catch block
-//							e.printStackTrace();
-//						}
-		
+		/*Processo per la costruzione del file XML*/
+		try {
+			Document xmlSentences = TextUtils.TabToXml(HandleConstants.getTabFileAnalyzed(), true);
+			ClaviusUtils.makeSentenceXML(xmlSentences);
+			// TODO build XML for integration purposes (Tokens and Linguistical_Analysis)
+			ClaviusUtils.makeIntegrationXMLforAnalysis(xmlSentences);
+			SentencesHandler.main(new String[]{HandleConstants.getWorkDir(), HandleConstants.getLetterRif()});
+		} catch (JDOMException e) {
+			e.getMessage();
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 
 
 		/* Processo per la query al LemLat */
 
-//		ParseXMLAnalized par = new ParseXMLAnalized("C:/tmp/MP/VERG/VERG/Test1_an.xml");
-//		StringBuilder lemLatBuider = new StringBuilder();
-//		try {
-//			List<String> tokens = par.extractTokens();
-//			for (String token : tokens) {
-//				//System.out.println(token);
-//				lemLatBuider.append("TOKEN URI: " + token);
-//				String[] argLemLat = new String[1];
-//				argLemLat[0] = token.replaceAll("(.+)@+?", "").replaceAll("\\[\\d\\]", "").toLowerCase();
-//				lemLatBuider.append("\n\tTOKEN STRING: " + argLemLat[0]+"\n");
-//				LemLatQuery.main(argLemLat);
-//				lemLatBuider.append(LemLatQuery.analysisStringBuider() + "\n");
-//				//lemLatBuider.append("\t\tANALYSIS" + "\n");
-//				lemLatBuider.append("\n");
-//				TextUtils.StringToFile(lemLatBuider, "C:/tmp/MP/VERG/VERG/LemLat_17032014_an.txt");
-//			}
-//		} catch (JDOMException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+		//		ParseXMLAnalized par = new ParseXMLAnalized("C:/tmp/MP/VERG/VERG/Test1_an.xml");
+		//		StringBuilder lemLatBuider = new StringBuilder();
+		//		try {
+		//			List<String> tokens = par.extractTokens();
+		//			for (String token : tokens) {
+		//				//System.out.println(token);
+		//				lemLatBuider.append("TOKEN URI: " + token);
+		//				String[] argLemLat = new String[1];
+		//				argLemLat[0] = token.replaceAll("(.+)@+?", "").replaceAll("\\[\\d\\]", "").toLowerCase();
+		//				lemLatBuider.append("\n\tTOKEN STRING: " + argLemLat[0]+"\n");
+		//				LemLatQuery.main(argLemLat);
+		//				lemLatBuider.append(LemLatQuery.analysisStringBuider() + "\n");
+		//				//lemLatBuider.append("\t\tANALYSIS" + "\n");
+		//				lemLatBuider.append("\n");
+		//				TextUtils.StringToFile(lemLatBuider, "C:/tmp/MP/VERG/VERG/LemLat_17032014_an.txt");
+		//			}
+		//		} catch (JDOMException e) {
+		//			// TODO Auto-generated catch block
+		//			e.printStackTrace();
+		//		} catch (IOException e) {
+		//			// TODO Auto-generated catch block
+		//			e.printStackTrace();
+		//		}
 
+		//ClaviusMain main1 = new ClaviusMain();
+		//main1.manageCorpus("ldt-1.5.xml");
 
 
 		//		main1.setMsg("fidelis dulcem amat virgo poetam");
