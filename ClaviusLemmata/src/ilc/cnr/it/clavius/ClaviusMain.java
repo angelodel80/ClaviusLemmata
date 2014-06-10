@@ -7,12 +7,13 @@ import ilc.cnr.it.clavius.constants.HandleConstants;
 import ilc.cnr.it.clavius.corpus.TextHandler;
 import ilc.cnr.it.clavius.corpus.TreeBankHandler;
 
+import ilc.cnr.it.clavius.lemmata.ParseToken;
 import ilc.cnr.it.clavius.lemmata.ParseXMLAnalized;
 import ilc.cnr.it.clavius.utils.ClaviusUtils;
 import ilc.cnr.it.clavius.utils.TextUtils;
 import it.cnr.ilc.angelo.lemlat.LemLatQuery;
 import it.cnr.ilc.angelo.lemlat.query.LemLatBaseSearch;
-import it.cnr.ilc.angelo.main.ParseToken;
+//import it.cnr.ilc.angelo.main.ParseToken;
 
 import java.io.IOException;
 import java.io.ObjectInputStream.GetField;
@@ -191,7 +192,7 @@ public class ClaviusMain {
 
 				//ClaviusMain main1 = new ClaviusMain();
 		
-				ClaviusMain main2 = new ClaviusMain();
+				ClaviusMain lemmatizationRun = new ClaviusMain();
 		
 				//main2.manageCorpus("ldt-1.5.xml");
 		
@@ -202,7 +203,7 @@ public class ClaviusMain {
 				Map<String, String> sentences = th.getSentences(HandleConstants.getXmlTeiFile());
 		
 				// Funzionalità per la riscrittura del testo in fullText
-				main2.writeFullText(sentences, HandleConstants.getFullTextFile());
+				lemmatizationRun.writeFullText(sentences, HandleConstants.getFullTextFile());
 		
 				// Funzionalità per il PoS Tagging
 				Object[] sents = sentences.values().toArray();
@@ -210,23 +211,21 @@ public class ClaviusMain {
 		
 				
 				for(int i = 0; i< sents.length; i++){
-					main2.setMsg((String)sents[i]);
-					main2.setSentName(String.format("%s:: %s", (String)sKeys[i], main2.getMsg()));
-					System.out.println(main2.getSentName());
+					lemmatizationRun.setMsg((String)sents[i]);
+					lemmatizationRun.setSentName(String.format("%s:: %s", (String)sKeys[i], lemmatizationRun.getMsg()));
+					System.out.println(lemmatizationRun.getSentName());
 					//			//FIXME costruire i token prima di processare le sentences con HUNPOS!!!
-					//main2.process(HandleConstants.getModelforHunPos(), HandleConstants.getPathToHunPos());
+					lemmatizationRun.process(HandleConstants.getModelforHunPos(), HandleConstants.getPathToHunPos());
 				}
-				//main2.writeOut(HandleConstants.getTaggedFile()); // Scrivo il contenuto del posTagging
+				lemmatizationRun.writeOut(HandleConstants.getTaggedFile()); // Scrivo il contenuto del posTagging
 		
 				/* processo per la ricerca del lemma nella banca dati formario-lemmario */
 		
 				String[] ParseTokenArgs = {HandleConstants.getTaggedFile(), HandleConstants.getTabFileAnalyzed()};
 				ParseToken.main(ParseTokenArgs);
-//				//ParseToken.init(HandleConstants.getTaggedFile(), HandleConstants.getTabFileAnalyzed());
-//				//ParseToken.run();
-//		
-//				/*Processo per la costruzione del file XML*/
-//		
+	
+				/*Processo per la costruzione del file XML*/
+		
 //						try {
 //							Document xmlSentences = TextUtils.TabToXml(HandleConstants.getTabFileAnalyzed(), true);
 //							ClaviusUtils.makeSentenceXML(xmlSentences);

@@ -1,4 +1,3 @@
-
 /**
  * 
  */
@@ -28,7 +27,7 @@ public class ParseText {
 	/**
 	 * @param args
 	 */
-	public static boolean init(String fileIn, String fileOut){
+	static boolean init(String fileIn, String fileOut){
 		boolean ret = false;
 		myFile = new File(fileIn);
 		outFile = new File(fileOut);
@@ -78,6 +77,7 @@ public class ParseText {
 		writer.write(outString.toString());
 		writer.flush();
 		writer.close();
+		System.err.println("writing done!");
 		
 	}
 

@@ -44,11 +44,11 @@ public class ParseTextLexicon extends ParseText {
 		setLexMorph(new TreeMap<String, String>());
 		try {
 			reader = getReader(myFile);
-		} catch (UnsupportedEncodingException e) {
+		} catch (UnsupportedEncodingException eu ) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			eu.printStackTrace();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
+			// TODO: handle exception
 			e.printStackTrace();
 		}
 		try {
