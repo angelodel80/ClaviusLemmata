@@ -11,16 +11,13 @@ public class HandleConstants {
 	
 	private final static String letterRif = "147";
 	private final static String TeiFile = "147-transcription.xml";
-	private final static String workDir = "C:/tmp/Clavius/TEI-MarkUp/08042014/"+letterRif+"/";
-			//"C:/tmp/Clavius/TEI-MarkUp/08042014/"+letterRif+"/";
-			//"C:/tmp/Clavius/TEI-MarkUp/08042014/136/";
-			// "C:/tmp/MP/1/";
-	
-	//"136_APUG_530_cc.138-139.xml";"aeneis_1.xml";
+	private final static String workDir = 
+			//"http://claviusontheweb.it:8080/exist/rest//db/clavius/documents/";
+			"/Users/angelodel80/Risorse/sources/clavius_workshop/"+letterRif+"/";
 	
 	private final static String xmlTeiFile = workDir+TeiFile;
 
-	private final static String FullTextFile = workDir+"fullText.txt";
+	private final static String FullTextFile = workDir+letterRif+".txt";
 	
 	private final static String modelforHunPos = "testFirst.model";
 	private final static String tabFileAnalyzed = workDir+"out-tokens_Lemmata.txt";
@@ -29,8 +26,8 @@ public class HandleConstants {
 	
 	private final static String letterAnalyzed = "/Letter"+HandleConstants.letterRif+"_sentences_Analyzed";
 		
-	private final static String pathToHunPos = "C:/opt/hunpos-1.0-win/hunpos-1.0-win/hunpos-tag.exe";
-	private final static String pathToHunPosModel = "C:/opt/hunpos-1.0-win/hunpos-1.0-win/";
+	private final static String pathToHunPos = "/Users/angelodel80/Risorse/tools/hunpos-1.0-macosx/hunpos-tag";
+	private final static String pathToHunPosModel = "/Users/angelodel80/Risorse/tools/";
 	
 	private final static String xpathForSentences = "/tei:TEI/tei:text/tei:body/tei:div/tei:div/tei:ab/tei:s";
 			
