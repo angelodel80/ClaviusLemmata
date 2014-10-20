@@ -121,7 +121,7 @@ public class SentencesHandler {
 		String fileOut = String.format("%sLetter%s_anOUT.xml", args[0],args[1]);
 		if(SentencesHandler.init(file)){
 			sentences = SentencesHandler.run();
-			System.out.println(sentences.toString());
+			//System.out.println(sentences.toString());
 			SentencesHandler.BufferToFile(sentences,fileOut);
 		}
 		else{

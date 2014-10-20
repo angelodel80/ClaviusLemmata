@@ -423,7 +423,35 @@ public class ClaviusUtils {
 							handleSentenceOffSet(Offset,
 									w.getAttributeValue("end")))
 					.setAttribute("abbr", handleAbbreviation(w.getAttributeValue("token"),teiSentence))
-					.setAttribute("subtokens", handleLineBreak(w.getAttributeValue("token"),teiSentence))
+					.setAttribute("subtokens", handleLineBreak(
+							new TextRange() {
+								
+								@Override
+								public <T> TextRange setStart(T start) {
+									// TODO Auto-generated method stub
+									this.strart = ((Integer)start).intValue();
+									return this;
+								}
+								
+								@Override
+								public <T> TextRange setEnd(T end) {
+									// TODO Auto-generated method stub
+									this.end = ((Integer)end).intValue();
+									return this;
+								}
+
+								@Override
+								public <T> TextRange setText(T content) {
+									// TODO Auto-generated method stub
+									this.text = ((String)content);
+									return this;
+								}
+							}
+							.setStart(Integer.valueOf(w.getAttributeValue("start")))
+							.setEnd(Integer.valueOf(w.getAttributeValue("end")))
+							.setText(w.getAttributeValue("token")),
+							
+							teiSentence))
 					.addContent(w.getAttributeValue("token")));
 			localOffset = Integer.valueOf(w.getAttributeValue("end"))
 					.intValue();
@@ -434,10 +462,25 @@ public class ClaviusUtils {
 		return Offset;
 	}
 
-	private static String handleLineBreak(String tokenValue,
+	private static String handleLineBreak(TextRange tokenRange,
 			Element teiSentence) {
 		// TODO Auto-generated method stub
-		return teiSentence.getAttributeValue("n");
+		//XMLOutputter xop = new XMLOutputter(Format.getPrettyFormat());
+		//System.out.println(xop.outputString(teiSentence));
+		
+		List<Element> elms = teiSentence.getChildren();
+		
+		String sw = "";
+		(null!=elms){
+			for (Element element : elms) {
+				System.err.println("in IF PER TEI-CHILD");
+				sw = element.getName();
+					
+			}
+			
+		}
+		
+		return tokenRange.getText() + String.format(" [%d - %d] %s", tokenRange.getStart(), tokenRange.getEnd(), sw);
 	}
 
 	private static String handleAbbreviation(String tokenValue,
@@ -453,7 +496,7 @@ public class ClaviusUtils {
 						Namespace.getNamespace("tei", ns.getURI()));
 		List<Element> listOfChoice = choicesExpression
 				.evaluate(teiSentence);
-		if(!listOfChoice.isEmpty() && null!=listOfChoice){
+		if( (!listOfChoice.isEmpty()) && (null!=listOfChoice) && (null!=listOfChoice.get(0).getChild("abbr", ns))){
 			 choice = listOfChoice.get(0); // FIXME: se nella sentence ci sono più di una choice non funziona questo metodo
 			 System.err.println(tokenValue);
 			 System.err.println(choice.getChild("expan", ns).getText());
